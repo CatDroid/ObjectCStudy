@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B0933D8E253214B800AF3EE3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0933D8D253214B800AF3EE3 /* main.m */; };
+		B0933D972532A1B600AF3EE3 /* Shape.m in Sources */ = {isa = PBXBuildFile; fileRef = B0933D962532A1B600AF3EE3 /* Shape.m */; };
+		B0933D9B2532F04100AF3EE3 /* Circle.m in Sources */ = {isa = PBXBuildFile; fileRef = B0933D9A2532F04100AF3EE3 /* Circle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		B0933D8A253214B800AF3EE3 /* ObjectCStudy */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ObjectCStudy; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0933D8D253214B800AF3EE3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B0933D952532A1B600AF3EE3 /* Shape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shape.h; sourceTree = "<group>"; };
+		B0933D962532A1B600AF3EE3 /* Shape.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Shape.m; sourceTree = "<group>"; };
+		B0933D992532F04100AF3EE3 /* Circle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Circle.h; sourceTree = "<group>"; };
+		B0933D9A2532F04100AF3EE3 /* Circle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Circle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				B0933D8D253214B800AF3EE3 /* main.m */,
+				B0933D952532A1B600AF3EE3 /* Shape.h */,
+				B0933D962532A1B600AF3EE3 /* Shape.m */,
+				B0933D992532F04100AF3EE3 /* Circle.h */,
+				B0933D9A2532F04100AF3EE3 /* Circle.m */,
 			);
 			path = ObjectCStudy;
 			sourceTree = "<group>";
@@ -118,7 +128,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0933D9B2532F04100AF3EE3 /* Circle.m in Sources */,
 				B0933D8E253214B800AF3EE3 /* main.m in Sources */,
+				B0933D972532A1B600AF3EE3 /* Shape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
