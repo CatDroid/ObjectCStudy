@@ -61,5 +61,16 @@ int main(int argc, const char * argv[]) {
         BOOL flag = TRUE ;
         NSLog(@"OC中TRUE FLASE是个宏定义 1/0  %i", flag);
     }
+    
+    {
+        SDate a;
+        NSLog(@"%i", a.day);
+    }
+    
+    {
+        NSInteger i = 24 ; // 在32bit上是int 在64bit上是long int 都是32bit的。NSInteger只是Typedef
+        i += 26;
+        NSLog(@"add sum = %li", i ); // 在64bit上 应该用%li
+    }
     return 0;
 }
