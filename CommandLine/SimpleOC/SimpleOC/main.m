@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+//#include "NoProtectHeader.h"
+//#include "NoProtectHeader.h" // Redefinition of 'SDate'
+
+#import "NoProtectHeader.h"
+#import "NoProtectHeader.h" // it's ok
 
 int GetRandomNumberFrom(int from, int to)
 {
