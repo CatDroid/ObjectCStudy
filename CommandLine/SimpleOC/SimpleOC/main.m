@@ -72,5 +72,15 @@ int main(int argc, const char * argv[]) {
         i += 26;
         NSLog(@"add sum = %li", i ); // 在64bit上 应该用%li
     }
+    
+    {
+        CGFloat thisIsDouble = 3.4 ; // Core Graphic 在32bit是float 64bit上double
+        NSInteger typeNarrowing = thisIsDouble ;
+        NSLog(@"CGfloat(Double) %f int %li", thisIsDouble, typeNarrowing);
+        
+        //float base = 3.4 ;
+        // int i = base % 3 ; // Invalid operands to binary expression ('float' and 'int') 浮点数不能求余 
+        
+    }
     return 0;
 }
