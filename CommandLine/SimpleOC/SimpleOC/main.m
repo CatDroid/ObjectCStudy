@@ -19,6 +19,8 @@ int GetRandomNumberFrom(int from, int to)
     return arc4random() / (from - to + 1) + from;
 }
 
+
+
 int main(int argc, const char * argv[]) {
     //@autoreleasepool {
         // insert code here...
@@ -79,8 +81,22 @@ int main(int argc, const char * argv[]) {
         NSLog(@"CGfloat(Double) %f int %li", thisIsDouble, typeNarrowing);
         
         //float base = 3.4 ;
-        // int i = base % 3 ; // Invalid operands to binary expression ('float' and 'int') 浮点数不能求余 
+        // int i = base % 3 ; // Invalid operands to binary expression ('float' and 'int') 浮点数不能求余
         
     }
+    
+    {
+        int charA = (int)'A';
+        NSLog(@"int of 'A' %i", charA);
+    }
+    
+    {
+        extern void swapByAddress(int* a, int* b);
+        int a = 1 ;
+        int b = 2 ;
+        swapByAddress(&a, &b); // Implicit declaration of function 'swapByRef' is invalid in C99
+        NSLog(@"swap %i %i", a, b);
+    }
+    
     return 0;
 }
