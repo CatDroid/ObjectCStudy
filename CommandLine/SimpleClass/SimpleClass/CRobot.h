@@ -6,9 +6,11 @@
 @interface CRobot : NSObject 
 {
     // @protected
-	bool _testFlag; // 实例变量
 	int _x ;
 	int _y ;
+    
+@private
+    bool _testFlag; // 实例变量
 }
 
 @property int _id;
@@ -35,6 +37,9 @@
 
 
 -(void) goHome;
+
+-(BOOL) pass;
+-(void) setPass:(BOOL) flag;
 
 @end
 

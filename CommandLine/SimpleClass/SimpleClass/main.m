@@ -16,8 +16,15 @@ int main(int argc, const char * argv[]) {
         CRobot* p2 = [[CRobot alloc] initId:124 withModel:@"Model2"];
         
         [p1 goHome];
-        
         [p2 goHome];
+        
+        NSLog(@"p1 is pass ? %i", p1.pass); // 计算属性 会使用实例变量存储
+        
+        p1.pass = true;
+        p2.pass = true ;
+        
+        NSLog(@"p2 is pass ? %i", p2.pass);
+        
         
         
     }
