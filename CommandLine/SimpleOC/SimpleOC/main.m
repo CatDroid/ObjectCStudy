@@ -19,6 +19,72 @@ int GetRandomNumberFrom(int from, int to)
     return arc4random() / (from - to + 1) + from;
 }
 
+enum _PROCESS_TYPE
+{
+    TYPE_NOTHING,
+    TYPE_ADD,
+    TYPE_MIN,
+};
+
+typedef enum _PROCESS_TYPE PROCESS_TYPE;
+
+
+int processData(int (^processFtn)(int,int), int data1, int data2 )
+{
+    return processFtn(data1, data2);
+}
+
+typedef int(^PROCESS_FTN)(int, int ); // block作为函数的返回值 必须要用typedef
+
+// Block的定义格式. 返回值类型(^block变量名)(形参列表) = ^(形参列表) { }
+// typedef void (^T)(void);
+// T f() {
+//  return ^{};
+// }
+PROCESS_FTN getFtn(PROCESS_TYPE procType)
+{
+    switch (procType)
+    {
+        case TYPE_NOTHING:
+        case TYPE_ADD:
+        {
+            // block/块   一个 "块的定义" 赋值给 一个 "块变量"
+            int (^AddFtn)(int, int) = ^int(int num1, int num2)
+            {
+                return num1 + num2 ;
+            };
+            return AddFtn ;
+        }
+        case TYPE_MIN:
+        {
+            int (^ minFtn) (int, int) = ^int(int num1, int num2)
+            {
+                return num1 - num2 ;
+            };
+            return minFtn;
+        }
+        
+    }
+}
+
+typedef double (^DOU_FTN) (double num1, double num2);
+
+
+DOU_FTN getClosure(double upValue)
+{
+    __block double test = upValue ;
+    double (^ftn) (double, double) = ^double(double n1, double n2)
+    {
+        test ++; // 如果需要修改 upvalue 就需要用 __block 修饰变量。如果只是读取就不需要
+        return n1 + n2 + test;
+    };
+    
+    test++; // 会影响block函数调用时候的值
+    
+    return ftn ;
+}
+ 
+
 
 
 int main(int argc, const char * argv[]) {
@@ -96,6 +162,45 @@ int main(int argc, const char * argv[]) {
         int b = 2 ;
         swapByAddress(&a, &b); // Implicit declaration of function 'swapByRef' is invalid in C99
         NSLog(@"swap %i %i", a, b);
+    }
+    
+
+    {
+        int (^ftn)(int,int) = getFtn(TYPE_ADD);
+        int (^ftn2)(int,int) = getFtn(TYPE_MIN);
+        int result = ftn2(ftn(12, 13),15);
+        NSLog(@"block ftn result is = %i", result);
+    }
+    
+    {
+        // 闭包
+        double (^dFtn) (double, double) =  getClosure(12.0);
+        double result = dFtn(11.5, 5.5);
+        NSLog(@"closure is %f", result);
+    }
+    
+    
+    {
+ 
+        typedef int (^FTN) (int d1, int(^pre)(int));
+        
+        int offset = 2 ;
+        //__block int offset = 2 ; // 如果不加block 那么创建begin的时候 upvalue固定是 2 不会受到后面的影响
+        int (^begin)(int) = ^int(int d1)
+        {
+            return d1 + offset;
+        };
+        
+        FTN mul = ^int(int d1, int(^pre)(int))
+        {
+            int result = pre(d1);
+            return result * 2 ;
+        };
+        
+        offset = 4 ;
+        int result = mul(12, begin);
+        NSLog(@"block作为参数 %i", result); // 如果加上修饰符__block就是32 不加就是28
+        
     }
     
     return 0;
