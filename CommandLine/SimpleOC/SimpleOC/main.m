@@ -203,5 +203,14 @@ int main(int argc, const char * argv[]) {
         
     }
     
+    
+    {
+        int i = 3 ;
+        int random = (arc4random() % (100 + 1));
+        BOOL flag =  random> 50 ;
+        int temp = flag ? (NSLog(@"branch 1") , i = 4 ):(NSLog(@"branch 2") , i = 5);
+        NSLog(@"?: 三元运算符 多个表达式  random = %i i=%i temp=%i " ,random, i , temp);
+    }
+    
     return 0;
 }
