@@ -47,4 +47,11 @@
     self->_testFlag = pass ;
 }
 
+-(NSString*) description
+{
+    NSString* base = [super description];
+    NSString* more = [NSString stringWithFormat:@"%i-%@-%@", self._id, self._model,base];
+    return more ;
+}
+
 @end

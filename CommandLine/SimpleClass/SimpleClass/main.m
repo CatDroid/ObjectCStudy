@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
         p1.pass = true;
         p2.pass = true ;
         
-        NSLog(@"p2 is pass ? %i", p2.pass);
+        NSLog(@"p2(%@) is pass ? %i", p2, p2.pass);
         
         
         

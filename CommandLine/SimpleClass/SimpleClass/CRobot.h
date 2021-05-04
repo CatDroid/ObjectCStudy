@@ -41,6 +41,8 @@
 -(BOOL) pass;
 -(void) setPass:(BOOL) flag;
 
+-(NSString*) description ;
+
 @end
 
 
