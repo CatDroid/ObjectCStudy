@@ -68,6 +68,11 @@ int main(int argc, const char * argv[]) {
             NSLog(@"respondsToSelector NO");
         }
       
+        {
+            CRobotSoldier* cCopy1 = [cs1 copy];
+            NSLog(@">>>>> origin %@", cs1);
+            NSLog(@">>>>> copied %@", cCopy1);
+        }
         
         extern void secondary();
         secondary();

@@ -30,5 +30,21 @@
     NSLog(@"[%@] [CRobotProtocol] recoveryToX ", self);
 }
 
+-(id) copyWithZone:(NSZone*) zone
+{
+    CRobotSoldier* deepClone = [[CRobotSoldier alloc] initId:__LINE__ withModel:@(__func__)];
+    deepClone->_x = self->_x ;
+    deepClone->_y = self->_y ;
+    //deepClone->_testFlag = self->_testFlag; private
+    NSString* old = [deepClone._model copy] ;
+    
+    // deepClone._model = [deepClone._model stringByAppendingString:self._model];
+    
+    deepClone._model = [NSString stringWithFormat:@"%@;%@", deepClone._model, self._model];
+    
+    return deepClone;
+  
+}
+
 @end
 
