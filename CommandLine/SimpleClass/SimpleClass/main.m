@@ -36,6 +36,39 @@ int main(int argc, const char * argv[]) {
         [cs1 goHome];
         [cs1 moveToX:-666 Y:-888];
         
+        if ([cs1 conformsToProtocol:@protocol(CRobotProtocol)])
+        {
+            // 如果声明了协议 但是没有真正实现协议 运行报错
+            // 'NSInvalidArgumentException',
+            // reason: '-[CRobotSoldier recoveryToX:Y:]: unrecognized selector sent to instance 0x103204c70'
+            NSLog(@"conformsToProtocol YES");
+            if ([cs1 respondsToSelector:@selector(recoveryToX:Y:)])
+            {
+                // 判断协议的方法是否实现还是用 respondsToSelector
+                [cs1 recoveryToX:-1 Y:-1];
+                NSLog(@"implement noImplementProtocolMethod? %s" , [cs1 respondsToSelector:@selector(noImplementProtocolMethod)]?"YES":"NO");
+            }
+            else
+            {
+                NSLog(@"respondsToSelector NO");
+            }
+        }
+        else
+        {
+            NSLog(@"conformsToProtocol NO");
+        }
+        
+        // 判断协议中的方法是否实现
+        if ([cs1 respondsToSelector:@selector(fire)])
+        {
+            [cs1 performSelector:@selector(fire)];
+        }
+        else
+        {
+            NSLog(@"respondsToSelector NO");
+        }
+      
+        
         extern void secondary();
         secondary();
         

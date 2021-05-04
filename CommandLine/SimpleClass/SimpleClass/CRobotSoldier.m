@@ -17,6 +17,18 @@
     NSLog(@"CRobotSoldier MoveToX:Y:");
 }
 
+// 即使不实现 也不会编译错误
+-(void) fire
+{
+    NSLog(@"[%@] [CRobotProtocol] fire ", self);
+}
+
+-(void) recoveryToX:(int)x Y:(int)y
+{
+    self->_x = x ;
+    self->_y = y ;
+    NSLog(@"[%@] [CRobotProtocol] recoveryToX ", self);
+}
 
 @end
 

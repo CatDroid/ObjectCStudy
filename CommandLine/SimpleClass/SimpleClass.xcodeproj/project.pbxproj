@@ -27,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B070A6BD26411602009D4227 /* CRobotProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotProtocol.h; sourceTree = "<group>"; };
 		B0DB91B32640277A00EFF18D /* SimpleClass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleClass; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0DB91B62640277A00EFF18D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0DB91BE26402BA600EFF18D /* CRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRobot.m; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		B0DB91B52640277A00EFF18D /* SimpleClass */ = {
 			isa = PBXGroup;
 			children = (
+				B070A6BD26411602009D4227 /* CRobotProtocol.h */,
 				B0DB91C62640F3D200EFF18D /* CRobotSoldierSelfDestruct.h */,
 				B0DB91C72640F3D200EFF18D /* CRobotSoldierSelfDestruct.m */,
 				B0DB91C32640E79300EFF18D /* CRobotSoldier.h */,

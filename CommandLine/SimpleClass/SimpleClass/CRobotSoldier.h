@@ -2,8 +2,9 @@
 #define CROBOT_SOLDIER_HEADER
 
 #import "CRobot.h"
+#import "CRobotProtocol.h"
 
-@interface CRobotSoldier:CRobot
+@interface CRobotSoldier:CRobot <CRobotProtocol>
 
 -(instancetype) initId:(int)_id withModel:(NSString *)_model;
 
