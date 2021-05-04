@@ -201,6 +201,21 @@
 
             }
             
+            {
+                // 文件属性
+                NSError* error = NULL;
+                NSDictionary* attrs = [fm attributesOfItemAtPath:fullTxtPath error:&error];
+                if (error == NULL)
+                {
+                    NSLog(@"文件大小 %llu", attrs.fileSize);
+                    NSLog(@"文件类型 %@", attrs.fileType); // NSFileTypeRegular
+                }
+                else
+                {
+                    NSLog(@"FileMananger attributesOfItemAtPath error %@", error);
+                }
+            }
+            
         
         }
         else
