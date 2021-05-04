@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B0DB91B72640277A00EFF18D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91B62640277A00EFF18D /* main.m */; };
 		B0DB91C026402BA600EFF18D /* CRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91BE26402BA600EFF18D /* CRobot.m */; };
+		B0DB91C42640E79300EFF18D /* CRobotSoldier.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91C22640E79300EFF18D /* CRobotSoldier.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		B0DB91B62640277A00EFF18D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B0DB91BE26402BA600EFF18D /* CRobot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRobot.m; sourceTree = "<group>"; };
 		B0DB91BF26402BA600EFF18D /* CRobot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobot.h; sourceTree = "<group>"; };
+		B0DB91C22640E79300EFF18D /* CRobotSoldier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRobotSoldier.m; sourceTree = "<group>"; };
+		B0DB91C32640E79300EFF18D /* CRobotSoldier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotSoldier.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 		B0DB91B52640277A00EFF18D /* SimpleClass */ = {
 			isa = PBXGroup;
 			children = (
+				B0DB91C32640E79300EFF18D /* CRobotSoldier.h */,
+				B0DB91C22640E79300EFF18D /* CRobotSoldier.m */,
 				B0DB91B62640277A00EFF18D /* main.m */,
 				B0DB91BF26402BA600EFF18D /* CRobot.h */,
 				B0DB91BE26402BA600EFF18D /* CRobot.m */,
@@ -124,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0DB91C026402BA600EFF18D /* CRobot.m in Sources */,
+				B0DB91C42640E79300EFF18D /* CRobotSoldier.m in Sources */,
 				B0DB91B72640277A00EFF18D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

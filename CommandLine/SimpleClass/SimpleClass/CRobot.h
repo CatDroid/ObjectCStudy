@@ -37,6 +37,10 @@
 
 
 -(void) goHome;
+-(void) moveToX:(int)x Y:(int)y;
+//-(void) MoveToX:(int)x Y:(int)y; // 不在inteface中声明
+
+-(void) noImplemetationMethon;
 
 -(BOOL) pass;
 -(void) setPass:(BOOL) flag;

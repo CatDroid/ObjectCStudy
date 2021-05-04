@@ -35,6 +35,16 @@
 	NSLog(@"goHome Done %i-%@", self._id, self._model);
 }
 
+-(void) moveToX:(int)x Y:(int)y
+{
+    self->_x = x ;
+    self->_y = y ;
+}
+
+-(void) MoveToX:(int)x Y:(int)y
+{
+    NSLog(@"ERROR this is [M]oveToX:Y: , not [m]oveToX:Y:");
+}
 
 -(BOOL) pass
 {
