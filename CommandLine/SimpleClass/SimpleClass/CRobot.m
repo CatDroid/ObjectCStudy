@@ -43,7 +43,7 @@
 
 -(void) MoveToX:(int)x Y:(int)y
 {
-    NSLog(@"ERROR this is [M]oveToX:Y: , not [m]oveToX:Y:");
+    NSLog(@"ERROR this is [M]oveToX:Y: , not [m]oveToX:Y: ---- x=%i, y=%i", x, y);
 }
 
 -(BOOL) pass

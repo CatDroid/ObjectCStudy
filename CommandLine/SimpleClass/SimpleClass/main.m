@@ -13,8 +13,8 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         //CRobot* p0 = [[CRobot alloc] init]; // 'init' is unavailable  NS_UNAVAILABLE
-        CRobot* p1 = [[CRobot alloc] initId:123];
-        CRobot* p2 = [[CRobot alloc] initId:124 withModel:@"Model-2"];
+        CRobot* p1 = [[CRobot alloc] initId:__LINE__];
+        CRobot* p2 = [[CRobot alloc] initId:__LINE__ withModel:@(__func__)];
         
         [p1 goHome];
         [p2 goHome];
@@ -32,11 +32,12 @@ int main(int argc, const char * argv[]) {
         // 没有实现 运行时候崩溃
         //[p1 noImplemetationMethon]; // unrecognized selector sent to instance
         
-        CRobotSoldier* cs1 = [[CRobotSoldier alloc] initId:125 withModel:@"Model-3"]; // Unknown receiver 'CRobotSoilder';
+        CRobotSoldier* cs1 = [[CRobotSoldier alloc] initId:__LINE__ withModel:@(__func__)]; // Unknown receiver 'CRobotSoilder';
         [cs1 goHome];
         [cs1 moveToX:-666 Y:-888];
         
-        
+        extern void secondary();
+        secondary();
         
     }
     return 0;
