@@ -150,9 +150,57 @@
         {
             NSLog(@"Create file & write ok ");
             
+            // NSString提供方法从文件读取字符串
             NSError *error = nil;
             NSString *fileStr = [NSString stringWithContentsOfFile:fullTxtPath encoding:NSUTF8StringEncoding error:&error];
             NSLog(@"read from file to NSString %@", fileStr);
+            
+            // 使用NSFileHandle 读写文件 文件大小
+            {
+                NSFileHandle* handle = [NSFileHandle fileHandleForUpdatingAtPath:fullTxtPath];
+                [handle seekToEndOfFile];
+                
+                NSDateFormatter* dateFormatter = [[NSDateFormatter alloc]init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSString* dateStr = [dateFormatter stringFromDate:[NSDate date]];
+                
+                NSData* dataOfStr = [dateStr dataUsingEncoding:NSUTF8StringEncoding];
+                
+                NSError* error = NULL;
+                [handle writeData:dataOfStr error:&error];
+                if (error != NULL) {
+                    NSLog(@"NSFileHandle writeData NSData error %@", error);
+                }
+                
+                [handle closeFile];
+                
+            }
+            
+            
+            {
+                // 只读  如果没有文件 返回handle为null 但是依旧可以执行其他方法(消息传递 target可以是nil)
+                NSFileHandle* handle = [NSFileHandle fileHandleForReadingAtPath:fullTxtPath];
+                unsigned long long offset = [handle offsetInFile];
+                NSLog(@"offsetInFile %llu", offset);
+                unsigned long long fileSize = [handle seekToEndOfFile];
+                NSLog(@"fileSize %llu", fileSize);
+                [handle seekToOffset:0 error:nil];
+                NSData* data = [handle readDataOfLength:fileSize];
+                if (data != nil) {
+                    char* d = (char*)data.bytes;
+                    int i = 0;
+                    for ( ; i < fileSize/4 ; i++)
+                    {
+                        NSLog(@"NSFileHandle readDataOfLength %c %c %c %c", d[i*4], d[i*4+1], d[i*4+2], d[i*4+3]);
+                    }
+                    if (fileSize % 4 == 3)  NSLog(@"NSFileHandle readDataOfLength %c %c %c ", d[i*4], d[i*4+1], d[i*4+2]);
+                    else if (fileSize % 4 == 2)  NSLog(@"NSFileHandle readDataOfLength %c %c ", d[i*4], d[i*4+1]);
+                    else if (fileSize % 4 == 1)  NSLog(@"NSFileHandle readDataOfLength %c ", d[i*4]);
+                }
+                [handle closeFile];
+
+            }
+            
         
         }
         else
@@ -233,20 +281,11 @@
             NSLog(@"file manager contentsAtPath->NSData done %@", fileData2);
         }
         
-        
-        //[str2 writeToFile:filePath2 atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        
-        // 读取文件 使用NSString
-
-        
-        // 完整url：协议头 + 主机地址 + 文件路径
-        
-        
-        
-        // 读取文件 使用NSData
-
     }
+    
+    
    
+    
     
     
 }
