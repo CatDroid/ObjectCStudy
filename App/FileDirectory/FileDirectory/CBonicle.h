@@ -26,6 +26,9 @@
 
 -(void)fire;
 
+// 析构函数
+-(void)dealloc;
+
 @end
 
 

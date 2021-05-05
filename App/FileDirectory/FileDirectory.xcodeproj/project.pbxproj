@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B06923D92642393D006324E0 /* CBonicle.m in Sources */ = {isa = PBXBuildFile; fileRef = B06923D82642393D006324E0 /* CBonicle.m */; };
+		B06924092642E972006324E0 /* CBonicleSub.m in Sources */ = {isa = PBXBuildFile; fileRef = B06924082642E972006324E0 /* CBonicleSub.m */; };
 		B070A6F326413010009D4227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F226413010009D4227 /* AppDelegate.m */; };
 		B070A6F626413010009D4227 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F526413010009D4227 /* SceneDelegate.m */; };
 		B070A6F926413010009D4227 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F826413010009D4227 /* ViewController.m */; };
@@ -20,6 +21,8 @@
 /* Begin PBXFileReference section */
 		B06923D72642393D006324E0 /* CBonicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBonicle.h; sourceTree = "<group>"; };
 		B06923D82642393D006324E0 /* CBonicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBonicle.m; sourceTree = "<group>"; };
+		B06924082642E972006324E0 /* CBonicleSub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CBonicleSub.m; sourceTree = "<group>"; };
+		B069240B2642E99C006324E0 /* CBonicleSub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBonicleSub.h; sourceTree = "<group>"; };
 		B070A6EE26413010009D4227 /* FileDirectory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileDirectory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B070A6F126413010009D4227 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B070A6F226413010009D4227 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				B070A6FF26413011009D4227 /* LaunchScreen.storyboard */,
 				B070A70226413011009D4227 /* Info.plist */,
 				B070A70326413011009D4227 /* main.m */,
+				B06924082642E972006324E0 /* CBonicleSub.m */,
+				B069240B2642E99C006324E0 /* CBonicleSub.h */,
 			);
 			path = FileDirectory;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				B070A70426413011009D4227 /* main.m in Sources */,
 				B070A6F626413010009D4227 /* SceneDelegate.m in Sources */,
 				B06923D92642393D006324E0 /* CBonicle.m in Sources */,
+				B06924092642E972006324E0 /* CBonicleSub.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

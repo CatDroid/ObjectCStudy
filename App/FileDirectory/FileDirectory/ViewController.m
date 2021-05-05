@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import "CBonicle.h"
+#import "CBonicleSub.h"
 
 @interface ViewController ()
 
@@ -351,6 +352,13 @@
         
         
     }
+    
+    
+    {
+        CBonicleSub* sub = [[CBonicleSub alloc] initWithName:@"CBonicleSub"];
+        NSLog(@"destructor { >>>>>>>>>>>");
+    } // 退出这里 就会析构
+    NSLog(@"destructor } >>>>>>>>>>>");
     
     
 }
