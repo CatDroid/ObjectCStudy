@@ -6,6 +6,7 @@
 //
 
 #import "ViewController.h"
+#import "CBonicle.h"
 
 @interface ViewController ()
 
@@ -300,7 +301,56 @@
     
     
    
-    
+    { // 序列化实例
+        CBonicle* b1 = [[CBonicle alloc] initWithName:@"b1"];
+        b1.position = CGPointMake(20,-20);
+        b1.life = 85;
+        
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString* docPath = paths.firstObject;
+        NSString* filePath = [docPath stringByAppendingPathComponent:@"CBonicle_B1.txt"];
+        
+        if ([NSKeyedArchiver archiveRootObject:b1 toFile:filePath])
+        {
+            NSLog(@"NSKeyedArchiver done");
+        }
+        
+        if ([fm fileExistsAtPath:filePath])
+        {
+            CBonicle* b2 = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+            if (b2 != NULL) {
+                NSLog(@"NSKeyedUnarchiver name %@", b2.name );
+                NSLog(@"NSKeyedUnarchiver name %f,%f", b2.position.x, b2.position.y );
+                NSLog(@"NSKeyedUnarchiver name %i", b2.life );
+            } else {
+                NSLog(@"NSKeyedUnarchiver fail");
+            }
+            
+            
+            NSData* data = [NSData dataWithContentsOfFile:filePath];
+        
+            CBonicle* array[10];
+            for (int i = 0 ; i < 10 ; i++ ){
+                NSError* error;
+                //array[i] = [NSKeyedUnarchiver unarchivedObjectOfClass:[CBonicle class] fromData:data error:&error]; // NSSecureCoding
+                array[i] = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                if (array[i] == NULL) {
+                    NSLog(@"unarchivedObjectOfClass from NSData error %@", error);
+                    break;
+                } else {
+                    array[i].name = [array[i].name stringByAppendingFormat:@"-clone-%i", i];
+                }
+                
+            }
+           
+            for (int i = 0 ; i < 10 ; i++ ){
+                [array[i] fire];
+            }
+        
+        }
+        
+        
+    }
     
     
 }

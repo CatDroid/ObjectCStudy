@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06923D92642393D006324E0 /* CBonicle.m in Sources */ = {isa = PBXBuildFile; fileRef = B06923D82642393D006324E0 /* CBonicle.m */; };
 		B070A6F326413010009D4227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F226413010009D4227 /* AppDelegate.m */; };
 		B070A6F626413010009D4227 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F526413010009D4227 /* SceneDelegate.m */; };
 		B070A6F926413010009D4227 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B070A6F826413010009D4227 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B06923D72642393D006324E0 /* CBonicle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBonicle.h; sourceTree = "<group>"; };
+		B06923D82642393D006324E0 /* CBonicle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBonicle.m; sourceTree = "<group>"; };
 		B070A6EE26413010009D4227 /* FileDirectory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileDirectory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B070A6F126413010009D4227 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B070A6F226413010009D4227 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,6 +64,8 @@
 		B070A6F026413010009D4227 /* FileDirectory */ = {
 			isa = PBXGroup;
 			children = (
+				B06923D72642393D006324E0 /* CBonicle.h */,
+				B06923D82642393D006324E0 /* CBonicle.m */,
 				B070A6F126413010009D4227 /* AppDelegate.h */,
 				B070A6F226413010009D4227 /* AppDelegate.m */,
 				B070A6F426413010009D4227 /* SceneDelegate.h */,
@@ -149,6 +154,7 @@
 				B070A6F326413010009D4227 /* AppDelegate.m in Sources */,
 				B070A70426413011009D4227 /* main.m in Sources */,
 				B070A6F626413010009D4227 /* SceneDelegate.m in Sources */,
+				B06923D92642393D006324E0 /* CBonicle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
