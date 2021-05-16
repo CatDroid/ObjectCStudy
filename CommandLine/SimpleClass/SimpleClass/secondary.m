@@ -302,4 +302,27 @@ void secondary()
          */
         
     }
+    
+    
+    {
+        NSString* str = @"中文abc.txt";
+        const char* cstr = [str UTF8String];
+        NSLog(@"NSString 转 utf-8 c char =%s", cstr); // 会乱码
+        NSLog(@"NSString 转大写 %@", str.uppercaseString);
+        NSLog(@"NSString 是否有后缀 %s", [str hasSuffix:@".txt"]?"YES":"NO"); // hasSuffix hasPrefix
+        NSLog(@"NSString 转 int %d", [@"123 hello" intValue]); // 注意不成功返回0 !  如果开始有部分可以转换 就会转换
+      
+    }
+    
+    
+    {
+        // 可以用来判断网络连接
+        NSURL* url = [NSURL URLWithString:@"http://www.baidu.com"];
+        NSError* error ;
+        NSString* html = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"NSString 获取指定url的html 内容 %@", html);
+        
+        // stringWithContentsOfFile  从文件读取NSString
+        // stringWithContentsOfURL   从url网络获取NSString
+    }
 }
