@@ -21,6 +21,35 @@
 
 @implementation ViewController
 
+// ------ ------ -------- ---------- ------ ------ -------- ---------- ------ ------ -------- ----------
+NSString* gCurLang = @"en";
+NSString* local(NSString* key)
+{
+    return NSLocalizedStringFromTable(key, gCurLang, nil);
+}
+void SwitchLang(NSString* lang)
+{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSArray* allLangs = [defaults objectForKey:@"AppleLanguages"];
+    
+    [allLangs enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"all language %lu %@", idx, obj);
+    }];
+    
+
+    if ([allLangs containsObject:lang]) {
+        gCurLang = lang ;
+    }
+    else {
+        NSLog(@"language not found %@", lang);
+    }
+    
+    
+    gCurLang = lang ;
+}
+// ------ ------ -------- ---------- ------ ------ -------- ---------- ------ ------ -------- ----------
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -157,7 +186,9 @@
 
 -(void) sayHello:(NSNotification*) notifaction
 {
-    self.text.text = [@"Say Hello Notify" stringByAppendingString:notifaction.object];
+    SwitchLang(@"zh");
+    NSString* base = [NSString stringWithFormat:@"Say %@ Notify", local(@"hello")];
+    self.text.text = [base stringByAppendingString:notifaction.object];
     NSLog(@"receive thread = %@", [NSThread currentThread]); //跟post同一个线程
 }
 

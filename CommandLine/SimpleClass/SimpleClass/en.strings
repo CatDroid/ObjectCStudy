@@ -1,0 +1,9 @@
+/* 
+  en.strings
+  SimpleClass
+
+  Created by hehanlong on 2021/5/16.
+  
+*/
+"hello"="en hello";
+"world"="en world“;

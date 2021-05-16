@@ -9,6 +9,33 @@
 
 #import "CRobotSoldierSelfDestruct.h" // 分类 要import扩展的文件
 
+
+NSString* gCurLang = @"en";
+NSString* local(NSString* key)
+{
+    return NSLocalizedStringFromTable(key, gCurLang, nil);
+}
+void SwitchLang(NSString* lang)
+{
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSArray* allLangs = [defaults objectForKey:@"AppleLanguages"];
+    
+    [allLangs enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"all language %lu %@", idx, obj);
+    }];
+    
+
+    if ([allLangs containsObject:lang]) {
+        gCurLang = lang ;
+    }
+    else {
+        NSLog(@"language not found %@", lang);
+    }
+    
+    
+    gCurLang = lang ;
+}
+
 void secondary()
 {
     NSLog(@"secondary ------------ being --------------");
@@ -324,5 +351,12 @@ void secondary()
         
         // stringWithContentsOfFile  从文件读取NSString
         // stringWithContentsOfURL   从url网络获取NSString
+    }
+    
+    {
+        // 创建资源 Resource--String file  命名为en.strings zh.string
+        NSLog(@"英文本地化结果 %@ %@", local(@"hello"), local(@"world"));
+        SwitchLang(@"zh");
+        NSLog(@"中文本地化结果 %@ %@", local(@"hello"), local(@"world")); // CommandLine无法使用本地化, ios app可以
     }
 }

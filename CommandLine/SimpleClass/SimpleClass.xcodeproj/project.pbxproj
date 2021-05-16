@@ -37,6 +37,8 @@
 		B0DB91C62640F3D200EFF18D /* CRobotSoldierSelfDestruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotSoldierSelfDestruct.h; sourceTree = "<group>"; };
 		B0DB91C72640F3D200EFF18D /* CRobotSoldierSelfDestruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRobotSoldierSelfDestruct.m; sourceTree = "<group>"; };
 		B0DB91CA2640F4A000EFF18D /* secondary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = secondary.m; sourceTree = "<group>"; };
+		B0FDDA10265113B100E2BD73 /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = en.strings; sourceTree = "<group>"; };
+		B0FDDA11265113FB00E2BD73 /* zh.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = zh.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 		B0DB91B52640277A00EFF18D /* SimpleClass */ = {
 			isa = PBXGroup;
 			children = (
+				B0FDDA11265113FB00E2BD73 /* zh.strings */,
 				B070A6BD26411602009D4227 /* CRobotProtocol.h */,
 				B0DB91C62640F3D200EFF18D /* CRobotSoldierSelfDestruct.h */,
 				B0DB91C72640F3D200EFF18D /* CRobotSoldierSelfDestruct.m */,
@@ -78,6 +81,7 @@
 				B0DB91BF26402BA600EFF18D /* CRobot.h */,
 				B0DB91BE26402BA600EFF18D /* CRobot.m */,
 				B0DB91CA2640F4A000EFF18D /* secondary.m */,
+				B0FDDA10265113B100E2BD73 /* en.strings */,
 			);
 			path = SimpleClass;
 			sourceTree = "<group>";

@@ -14,6 +14,8 @@
 		B06923F42642905A006324E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B06923F32642905A006324E0 /* Assets.xcassets */; };
 		B06923F72642905A006324E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06923F52642905A006324E0 /* LaunchScreen.storyboard */; };
 		B06923FA2642905A006324E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B06923F92642905A006324E0 /* main.m */; };
+		B0FDDA192651194E00E2BD73 /* en.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0FDDA1B2651194E00E2BD73 /* en.strings */; };
+		B0FDDA1D2651195E00E2BD73 /* zh.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0FDDA1F2651195E00E2BD73 /* zh.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		B06923F62642905A006324E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B06923F82642905A006324E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B06923F92642905A006324E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B0FDDA1A2651194E00E2BD73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/en.strings; sourceTree = "<group>"; };
+		B0FDDA1E2651195E00E2BD73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/zh.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 				B06923EB26429059006324E0 /* SceneDelegate.m */,
 				B06923ED26429059006324E0 /* ViewController.h */,
 				B06923EE26429059006324E0 /* ViewController.m */,
+				B0FDDA1B2651194E00E2BD73 /* en.strings */,
+				B0FDDA1F2651195E00E2BD73 /* zh.strings */,
 				B06923F026429059006324E0 /* Main.storyboard */,
 				B06923F32642905A006324E0 /* Assets.xcassets */,
 				B06923F52642905A006324E0 /* LaunchScreen.storyboard */,
@@ -133,6 +139,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B06923F72642905A006324E0 /* LaunchScreen.storyboard in Resources */,
+				B0FDDA192651194E00E2BD73 /* en.strings in Resources */,
+				B0FDDA1D2651195E00E2BD73 /* zh.strings in Resources */,
 				B06923F42642905A006324E0 /* Assets.xcassets in Resources */,
 				B06923F226429059006324E0 /* Main.storyboard in Resources */,
 			);
@@ -169,6 +177,22 @@
 				B06923F62642905A006324E0 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B0FDDA1B2651194E00E2BD73 /* en.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B0FDDA1A2651194E00E2BD73 /* en */,
+			);
+			name = en.strings;
+			sourceTree = "<group>";
+		};
+		B0FDDA1F2651195E00E2BD73 /* zh.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B0FDDA1E2651195E00E2BD73 /* en */,
+			);
+			name = zh.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
