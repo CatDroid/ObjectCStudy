@@ -131,7 +131,7 @@ void secondary()
         
         // ----------------- ---------- ---------- ----------
         NSMutableArray*  mutableArray = [NSMutableArray arrayWithCapacity:2];
-        NSLog(@"mutableArray arrayWithCapacity 2 count is %lu ", mutableArray.count);// 0 
+        NSLog(@"mutableArray arrayWithCapacity 2 count is %lu ", mutableArray.count);// 0
         [mutableArray addObject:@"如果数组元素是nil 不会遍历到 obj是NonNull"];
         //[mutableArray addObject:NULL]; // 不能是nil
         [mutableArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -150,6 +150,59 @@ void secondary()
          
     }
     
+ 
+    
+    
+    {
+        // 1. 集合Set和字典  无序集合
+        // 2. Key和Value只能是对象  NSInteger long  也是基本类型
+        // 3. 不能假设集合和字典的元素顺序
+        
+        NSSet* mySet = [NSSet setWithObjects:@"one", @"two", @"three", nil];
+        
+        [mySet enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    NSLog(@"NSSet 不能假设集合和字典的元素顺序 value %@",  obj);
+        }];
+        
+        NSLog(@"NSSet anyObject 可以随机返回其中一个 %@ ", [mySet anyObject]);
+        NSLog(@"NSSet containsObject 通过EqualTo判断 %s ", [mySet containsObject:@"two"]?"YES":"NO"); // YES 通过EqualTo判断
+        NSLog(@"NSSet anyObject 可以随机返回其中一个 %@ ", [mySet anyObject]);
+        
+        NSDictionary* dict1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"hello",[NSNumber numberWithInt:1],
+                              @"we", [NSNumber numberWithInt:2],
+                              @"friends", [NSNumber numberWithInt:3],
+                              @"are", [NSNumber numberWithInt:4],
+                              @"forever", [NSNumber numberWithInt:5],
+                              nil];
+        [dict1 enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSLog(@"key %@ value %@", key, obj);
+        }]; // 都是 3 2 5 1 4
+        
+        NSLog(@"----");
+        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"hello",[NSNumber numberWithInt:1],
+                              @"we", [NSNumber numberWithInt:2],
+                              @"friends", [NSNumber numberWithInt:3],
+                              @"are", [NSNumber numberWithInt:4],
+                              @"forever", [NSNumber numberWithInt:5],
+                              nil];
+        
+        [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSLog(@"key %@ value %@", key, obj);
+        }];
+        
+        
+        NSLog(@"NSDictionary objectForKey 字典通过key来找value %@", [dict objectForKey:@"are"] );
+        
+    }
+    
+    {
+        NSSet* set = [NSSet setWithObjects:[NSNumber numberWithFloat:12.3],[NSNumber numberWithFloat:13.4], [NSNumber numberWithFloat:14.5], nil];
+        [set enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSNumber* t = obj ;
+            NSLog(@"NSSet NSNumber floatValue = %f", [t floatValue]);
+        }];
         
     }
     
