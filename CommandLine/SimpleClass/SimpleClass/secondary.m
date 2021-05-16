@@ -52,6 +52,67 @@ void secondary()
     
     // NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     // [pool drain];
+    
+    {
+        NSArray* differentObjArray = [NSArray arrayWithObjects:
+                                      [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian], // [obj class]  _NSCopyOnWriteCalendarWrapper
+                                      @"StringElement", // [obj class] = __NSCFConstantString
+                                      [NSDate date],
+                                      [NSNumber numberWithFloat:1.2], // __NSCFNumber
+                                      [NSNumber numberWithBool:true], // __NSCFBoolean float bool 等基础类型
+                                      [NSValue valueWithPoint: NSMakePoint(5.0, -5.0)],  // CGPoint CGRect 等基础结构体
+                                      [NSValue valueWithRange: NSMakeRange(2, 10)],
+                                      nil];
+        
+        NSLog(@"Number 转换成其他基础类型 1 -> bool %i", [[NSNumber numberWithFloat:1.0] boolValue]); // 非0都是1
+        NSLog(@"Number 转换成其他基础类型 0.5->bool %i", [[NSNumber numberWithFloat:0.5] boolValue]);
+        NSLog(@"Number 转换成其他基础类型 0.5->bool %i", [[NSNumber numberWithBool:1.0] intValue]);
+        
+        [differentObjArray enumerateObjectsUsingBlock:^(id value, NSUInteger index, BOOL* stop){
+            NSLog(@"NSArray数组存放不同的类型 %lu %@ - %@", index, value , [value isKindOfClass:[NSDate class]]?@" is NSDate":[value class]);
+        }];
+        
+       
+        
+        
+        NSUInteger index = [differentObjArray indexOfObject:@"StringElement1"];
+        if (index == NSNotFound) { // 9223372036854775807 很大的整数
+            NSLog(@"NSArray indexOfObject NSNotFound");
+        } else {
+            NSLog(@"NSArray indexOfObject %lu", index );
+            
+        }
+        
+        
+        //NSArray* sameObjArray = @[@"one", @"two", @"three", nil, @"five"] ; //  Collection element of type 'void *' is not an Objective-C object
+        NSArray* sameObjArray = @[@"one", @"two", @"three", @"four"] ;  // 通过指令 @[] 来创建初始化
+        NSLog(@"count %lu firstObject %@ lastObject %@", sameObjArray.count, sameObjArray.firstObject, sameObjArray.lastObject);
+ 
+       
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString* path = paths.firstObject;
+        path = [path stringByAppendingPathComponent:@"myNSArray.txt"];
+        BOOL done = [sameObjArray writeToFile:path atomically:true];
+        // 返回false 代表不是每个元素都能写到文件  returns NO if all the objects are not property list objects, 比如NSDate
+        // 元素只能是 NSString, NSData, NSArray, or NSDictionary objects.
+        NSLog(@"NSArray写入文件 writeToFile done ? %s", done ? "success":"fail");
+        
+        NSArray* fileArray = [NSArray arrayWithContentsOfFile:path];
+        [fileArray enumerateObjectsUsingBlock:^(id value, NSUInteger index, BOOL* stop){
+            NSLog(@"arrayWithContentsOfFile %lu %@ ", index, value);
+        }];
+        
+      
+    
+        // 不可变数组
+        // 1. 数组成员都必须是对象 NSInteger/long NSUInteger/unsigned int都是基本类型 必须转换成NSNumber  结构体要转换成NSValue  numberWith* valueWith*
+        // 2. 数组元素可以是不同类型对象
+        // 3. indexOfObject 是没有元素调用 isEqual 方法对比  找不到返回一个很大的整数 NSNotFound
+        // 4.  @[] 可以创建NSArray 但是必须是对象 而且不能是null
+    
+        
+    }
+    
     {
         NSString *str0 = @"1";
         NSString *str1 = [NSString stringWithFormat:@"1"];// stringWithFormat 应该还有其他参数 不过这里没有 内部生成另外一个string 跟str0和str1
