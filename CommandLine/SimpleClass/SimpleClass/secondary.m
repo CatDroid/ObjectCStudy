@@ -73,21 +73,48 @@ void secondary()
         }];
         
        
-        
-        
         NSUInteger index = [differentObjArray indexOfObject:@"StringElement1"];
         if (index == NSNotFound) { // 9223372036854775807 很大的整数
             NSLog(@"NSArray indexOfObject NSNotFound");
         } else {
             NSLog(@"NSArray indexOfObject %lu", index );
-            
         }
+        
+        // ----------------- ---------- ---------- ----------
+        NSArray* paths1 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString* path1 = paths1.firstObject;
+        path1 = [path1 stringByAppendingPathComponent:@"myDiffentArray.txt"];
+        NSError* error = NULL;
+        
+        NSData* archiverData = [NSKeyedArchiver archivedDataWithRootObject:differentObjArray requiringSecureCoding:YES error:&error];
+        // NSString *archiverString = [archiverData base64EncodedStringWithOptions:0];
+        BOOL wrote = [archiverData writeToFile:path1 atomically:TRUE];
+        NSLog(@"NSArray 使用 NSKeyedArchiver archivedDataWithRootObject 序列化 而不是 writeToFile %s", wrote? "OK" : "Fail");
         
         
         //NSArray* sameObjArray = @[@"one", @"two", @"three", nil, @"five"] ; //  Collection element of type 'void *' is not an Objective-C object
         NSArray* sameObjArray = @[@"one", @"two", @"three", @"four"] ;  // 通过指令 @[] 来创建初始化
         NSLog(@"count %lu firstObject %@ lastObject %@", sameObjArray.count, sameObjArray.firstObject, sameObjArray.lastObject);
  
+        archiverData = [NSData dataWithContentsOfFile:path1];
+        // NSArray* recoveryArray = [NSKeyedUnarchiver unarchiveObjectWithData:archiverData]; // OK
+        // NSArray* recoveryArray = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSArray class] fromData:archiverData error:&error];
+        // Fail 'NS.objects' was of unexpected class 'NSCalendar'. Allowed classes are '{( NSArray)}'.}
+        NSArray* recoveryArray = [NSKeyedUnarchiver unarchivedObjectOfClasses:
+                                  [NSSet setWithObjects:[NSArray class],[NSCalendar class], [NSDate class],[NSValue class],[NSNumber class], nil]
+                                                                     fromData:archiverData
+                                                                        error:&error];
+        // 如果属性包含其他数据类型或自定义类型，则使用unarchivedObjectOfClasses把所有类型写入集合中，且自定义类型也需实现NSSecureCoding协议
+        if (error != NULL) {
+            NSLog(@"通过 unarchiveObjectWithData 恢复具有不同类型的数组 失败 %@", error);
+        }
+        [recoveryArray enumerateObjectsUsingBlock:^(id value, NSUInteger index, BOOL* stop){
+            NSLog(@"通过 unarchiveObjectWithData 恢复具有不同类型的数组 %lu %@ ", index, value);
+        }];
+        
+        
+        // ----------------- ---------- ---------- ----------
+        
        
         NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString* path = paths.firstObject;
@@ -109,6 +136,11 @@ void secondary()
         // 2. 数组元素可以是不同类型对象
         // 3. indexOfObject 是没有元素调用 isEqual 方法对比  找不到返回一个很大的整数 NSNotFound
         // 4.  @[] 可以创建NSArray 但是必须是对象 而且不能是null
+    
+        // 5. writeToFile 不能包含自定义的对象，也不能包含null  可以的类型是  (NSString, NSData, NSArray, or NSDictionary objects 文件是可以打开看到的
+        // 6. 自定义类型数组 使用 ：NSKeyedArchiver archivedDataWithRootObject 编码序列化 打开是乱码 跟 NSArray writetoFile不一样; NSKeyedUnarchiver unarchivedObjectOfClasses 解码需要列举所有类型
+         
+    }
     
         
     }
