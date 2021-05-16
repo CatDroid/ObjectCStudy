@@ -129,6 +129,14 @@ void secondary()
             NSLog(@"arrayWithContentsOfFile %lu %@ ", index, value);
         }];
         
+        // ----------------- ---------- ---------- ----------
+        NSMutableArray*  mutableArray = [NSMutableArray arrayWithCapacity:2];
+        NSLog(@"mutableArray arrayWithCapacity 2 count is %lu ", mutableArray.count);// 0 
+        [mutableArray addObject:@"如果数组元素是nil 不会遍历到 obj是NonNull"];
+        //[mutableArray addObject:NULL]; // 不能是nil
+        [mutableArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"NSMutableArray arrayWithCapacity 可以预先分配空间 但没有使用:  %lu %@ ", idx, obj);
+        }];
       
     
         // 不可变数组
