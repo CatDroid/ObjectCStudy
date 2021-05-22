@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CRobotSoldierSelfDestruct.h" // 分类 要import扩展的文件
+#import "objc/runtime.h"
 
 
 NSString* gCurLang = @"en";
@@ -74,7 +75,55 @@ void secondary()
     
     NSLog(@"isSubclassOfClass %i ", [CRobotSoldier isSubclassOfClass:[CRobot class]]); // 一个类是否另外一个类的子类
     
-    
+    {
+        BOOL res1 = [(id)[NSObject class] isKindOfClass:[NSObject class]]; // YES 特殊
+        // 如果调用的是类方法 那么会找元类来对比是否给定类, isKindOfClass会沿着元类的super来对比,元类的super最终指向NSObject(NSObject)
+        // 理解上 可以认为 isMemberOfClass/isKindOfClass 调用的都是对象/object, 如果对象是类，那么对比是的类的元类
+        BOOL res2 = [(id)[NSObject class] isMemberOfClass:[NSObject class]]; // NO
+        BOOL res3 = [(id)[CRobot  class] isKindOfClass:[CRobot class]]; // NO
+        BOOL res4 = [(id)[CRobot class] isMemberOfClass:[CRobot class]]; // NO
+        
+        NSLog(@"isKindOfClass(对象是类或子类的实例),isMemberOfClass(对象是类的实例) 有类方法和实例方法 %s %s %s %s",
+              res1?"YES":"NO",
+              res2?"YES":"NO"
+              );
+        
+        BOOL res5 = [NSObject class] == [[NSObject class] class]; // YES
+        BOOL res6 = [NSObject class] == [[[NSObject class] class] class]; // YES
+        BOOL res7 = [NSObject class] == object_getClass([NSObject class]);// NO
+        BOOL res8 = object_getClass([NSObject class]) == object_getClass(object_getClass([NSObject class])); // YES NSObjec是rootClass rootClass_meta的isa是自身
+        BOOL res9 = [NSObject class] == class_getSuperclass(object_getClass([NSObject class])); // YES rootClass_meta的super是rootClass(NSObject)
+        
+        /*
+
+
+         + (BOOL)isKindOfClass:(Class)cls {
+             // 第一次调用对象的isa(object_getClass) 后面就沿着这个class的super(class_getSuperclass)
+             // 注意 元类最后的super都是NSObject
+             for (Class tcls = object_getClass((id)self); tcls; tcls = class_getSuperclass(tcls)) {
+                 if (tcls == cls) return YES;
+             }
+             return NO;
+         }
+
+         - (BOOL)isKindOfClass:(Class)cls {
+             for (Class tcls = [self class]; tcls; tcls = class_getSuperclass(tcls)) {
+                 if (tcls == cls) return YES;
+             }
+             return NO;
+         }
+         
+         + (BOOL)isMemberOfClass:(Class)cls {
+             return object_getClass((id)self) == cls; // 会根据isa找元方法,判断本类的元类 是否给定cls类型
+         }
+
+         - (BOOL)isMemberOfClass:(Class)cls {
+             return [self class] == cls;
+         
+         }
+         
+         */
+    }
     NSLog(@"secondary ------------ end  --------------");
     
     // NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
