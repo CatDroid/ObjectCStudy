@@ -77,6 +77,9 @@ int main(int argc, const char * argv[]) {
         extern void secondary();
         secondary();
         
+        extern void third();
+        third();
+        
     }
     return 0;
 }
