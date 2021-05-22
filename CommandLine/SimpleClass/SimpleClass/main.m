@@ -80,6 +80,9 @@ int main(int argc, const char * argv[]) {
         extern void third();
         third();
         
+        extern void typeEncode();
+        typeEncode();
+        
     }
     return 0;
 }
