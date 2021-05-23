@@ -12,8 +12,15 @@
 {
 @private
     NSTimer* myNSThreadTimer ;
+    NSMachPort* myPort ;
+    NSThread* myExitThread ;
+    BOOL isLoopRunning;
 }
+
+
 @property (weak, nonatomic) IBOutlet UIButton *timerInvalidButton;
+@property (weak, nonatomic) IBOutlet UIButton *preformOnThreadButton;
+@property (weak, nonatomic) IBOutlet UIButton *exitRunLoopButton;
 
 
 @end
@@ -26,14 +33,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //---------------------------------------------------------------------------------------------------------------------
+    
     NSRunLoop* loop = [NSRunLoop currentRunLoop];  // CFRunLoopGetCurrent()
     NSRunLoop* mainLoop = [NSRunLoop mainRunLoop]; // CFRunLoopGetMain()
     
     // viewDidLoad的确在主线程
     if (loop == mainLoop) {
-        NSLog(@"current is main loop");
+        NSLog(@"current is main loop, thread name %@", [NSThread currentThread].name );
+        [[NSThread mainThread] setName:@"MainThread"]; // 主线程默认没有名字 这里自定义一个
     }
 
+    //---------------------------------------------------------------------------------------------------------------------
     // 切换到后台 会自动停止
     NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:2
                                                 // 一个时间间隔对象，以秒为单位，一个>0的浮点类型的值，如果该值<0,系统会默认为0.1;
@@ -74,18 +85,30 @@
     
     CFRunLoopRemoveObserver(CFRunLoopGetCurrent(), observer, kCFRunLoopDefaultMode);
     
-    NSThread* myThread = [[NSThread alloc] initWithTarget:self selector:@selector(myNSThread) object:nil];
+    NSThread* myThread = [[NSThread alloc] initWithTarget:self selector:@selector(_MyNSThreadLoop) object:nil];
     [myThread start];
+    
+
+    // 属性两种方式访问 self->_timerInvalidButton self.preformOnThreadButton
+    [self->_timerInvalidButton addTarget:self action:@selector(HandleTimerInvalidButton) forControlEvents:UIControlEventTouchDown];
+    
+    //---------------------------------------------------------------------------------------------------------------------
+    
+    self->myExitThread = [[NSThread alloc] initWithTarget:self selector:@selector(_MyNSThreadExitLoop) object:nil];
+    [self->myExitThread start];
     
     
     // 通过performSelector来在子线程中处理耗时操作，避免重复创建
     //   [self performSelector:@selector(test) onThread:self.thread withObject:nil waitUntilDone:NO];
-
-  
-    [_timerInvalidButton addTarget:self action:@selector(HandleTimerInvalidButton) forControlEvents:UIControlEventTouchDown];
+    
+    [self.preformOnThreadButton addTarget:self action:@selector(HandlePreformOnThreadButton) forControlEvents:UIControlEventTouchDown];
+    [self.exitRunLoopButton addTarget:self action:@selector(HandleExitThreadLoopButton)  forControlEvents:UIControlEventTouchDown];
+    //---------------------------------------------------------------------------------------------------------------------
     
 }
 
+
+//------------------------------------------------------------------------------------------------------------------------
 - (void) HandleTimerInvalidButton
 {
     
@@ -106,9 +129,12 @@
     
 }
 
-- (void) myNSThread
+
+
+- (void) _MyNSThreadLoop
 {
     NSLog(@"myNSThread enter");
+    [[NSThread currentThread] setName:@"_MyNSThreadLoop"];
     
     // NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
@@ -141,8 +167,11 @@
     [[NSRunLoop currentRunLoop] addPort:[NSPort port] forMode:NSDefaultRunLoopMode];
     [[NSRunLoop currentRunLoop] run];  // NSThread创建了Runnloop 但是不会自动运行
     
+  
     // 打开下面一行, 该线程的runloop就会运行起来，timer才会起作用
     //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3]];
+    
+ 
     
     NSLog(@"myNSThread end ");
     
@@ -182,7 +211,76 @@
 }
 
 
+//------------------------------------------------------------------------------------------------------------------------
+- (void) HandlePreformOnThreadButton
+{
+    NSLog(@"HandlePreformOnThreadButton before call thread:  %@", [NSThread currentThread].name);
+    [self performSelector:@selector(performSelectorMethod:) onThread:self->myExitThread withObject:[NSThread currentThread].name waitUntilDone:NO];
+    NSLog(@"HandlePreformOnThreadButton end ");
+}
 
+- (void) HandleExitThreadLoopButton
+{
+    NSLog(@"HandleExitThreadLoopButton start ");
+    [self performSelector:@selector(performSelectorMethodForExit:) onThread:self->myExitThread withObject:[NSThread currentThread].name waitUntilDone:NO];
+    NSLog(@"HandleExitThreadLoopButton end ");
+}
+
+
+- (void)performSelectorMethod:(NSString*) callThreadName
+{
+    NSLog(@"performSelectorMethod call thread name %@, process thread name %@", callThreadName, [NSThread currentThread].name);
+}
+
+- (void)performSelectorMethodForExit:(NSString*) callThreadName
+{
+    NSLog(@"performSelectorMethodForExit call thread name %@, process thread name %@", callThreadName, [NSThread currentThread].name);
+    self->isLoopRunning = false ;
+    CFRunLoopStop(CFRunLoopGetCurrent());
+}
+
+
+- (void) _MyNSThreadExitLoop
+{
+    [[NSThread currentThread] setName:@"_MyNSThreadExitLoop"];
+    
+    // 退出runloop方式 https://www.jianshu.com/p/24f875775336
+    // - (void)run;
+    //          如果runloop没有input sources或者附加的timer，runloop就会退出
+    //          苹果并不建议我们这么做，因为系统内部有可能会在当前线程的runloop中添加一些输入源，
+    //          所以通过手动移除input source或者timer这种方式，并不能保证runloop一定会退出
+    // - (void)runUntilDate:(NSDate *)limitDate；
+    //          可以通过设置超时时间来退出runloop 在超时时间到达之前，runloop会一直运行，
+    //          在此期间runloop会处理来自输入源的数据，并且也会在NSDefaultRunLoopMode模式下重复调用runMode:beforeDate:方法；
+    // - (void)runMode:(NSString *)mode beforeDate:(NSDate *)limitDate;
+    //          runloop会运行一次，当超时时间到达或者第一个输入源被处理，runloop就会退出。
+    //          如果我们想控制runloop的退出时机，而不是在处理完一个输入源事件之后就退出，
+    //          那么就要重复调用runMode:beforeDate:
+    // 无论通过哪一种方式启动runloop，如果没有一个输入源或者timer附加于runloop上，runloop就会立刻退出
+    
+   
+    NSRunLoop *myLoop  = [NSRunLoop currentRunLoop];
+    myPort = (NSMachPort *)[NSMachPort port];
+    [myLoop addPort:myPort forMode:NSDefaultRunLoopMode];
+    self->isLoopRunning = YES;
+    
+    while (isLoopRunning && [myLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]])
+    {
+        // 如果有 performSelector:onThread 会导致上面的runMode:beforeDate:退出一下
+        NSLog(@"NSRunLoop runMode:beforeData loop outsize ");
+    }
+    
+    NSLog(@"NSRunLoop runMode:beforeData loop exit  !!!!!!!!");
+    
+     
+    // 等待要看的
+    // https://www.jianshu.com/p/58f44609bd50 从零开始的Runloop实践02-使用ports 或custom input sources 和其他线程通信
+    // https://juejin.cn/post/6844903606932471822 RunLoop终极解析:输入源，定时源，观察者，线程间通信，端口通信，NSPort，NSMessagePort，NSMachPort，NSPortMessage
+    
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------
 
 
 /*
