@@ -9,6 +9,7 @@
 #import "FirstScene.h"
 #import "SpaceshipScene.h"
 #import "SpaceWarsScene.h"
+#import "MyShaderScene.h"
 #import "CApp.h"
 
 @implementation MainMenuScene
@@ -43,6 +44,30 @@
                                l3.frame.size.height/2 +  (l2.position.y + l2.frame.size.height/2) + 50);
     l3.name = @"SpaceWar";
     [self addChild:l3];
+    
+    
+    
+    SKLabelNode* l4 = [self->btnSKNode copy];
+    l4.text = @"Go To SKShade";
+    l4.position = CGPointMake(l4.frame.size.width/2,
+                              l4.frame.size.height/2 +  (l3.position.y + l3.frame.size.height/2) + 50);
+    l4.name = @"SKShade";
+    [self addChild:l4];
+    
+    
+    
+    // 根据给定的点 做样条曲线  可以使闭合的曲线 只要最后一点跟第一个点一样
+    CGPoint spline[6];
+    spline[0] = CGPointMake(0,40);
+    spline[1] = CGPointMake(20,140);
+    spline[2] = CGPointMake(40,110);
+    spline[3] = CGPointMake(60,130);
+    spline[4] = CGPointMake(80,10);
+    spline[5] = CGPointMake(90,90);
+    SKShapeNode* shape = [SKShapeNode shapeNodeWithSplinePoints:spline count:sizeof(spline)/sizeof(spline[0])];
+    shape.position = CGPointMake(self.frame.size.width /2 , self.frame.size.height /2);
+    [self addChild:shape];
+    
 }
 
 
@@ -53,6 +78,7 @@
         CGPoint positionInSKScene = [touch locationInNode:self];  // 区别于locationInView: InNode会转成左下角为原点
         SKNode* l2 = [self childNodeWithName:@"SpaceShip"];
         SKNode* l3 = [self childNodeWithName:@"//SpaceWar"];
+        SKNode* l4 = [self childNodeWithName:@"//SKShade"];
         if (CGRectContainsPoint(self->btnSKNode.frame, positionInSKScene)) // frame表示SKNode在父节点中的位置 这里是场景
         {
             SKTransition* tran = [SKTransition doorwayWithDuration:1];
@@ -74,7 +100,13 @@
             [self.view presentScene:scene transition:tran];
             *stop = true ;
         }
-        
+        else if (CGRectContainsPoint(l4.frame, positionInSKScene))
+        {
+            SKTransition* tran = [SKTransition crossFadeWithDuration:1];
+            MyShaderScene* scene = [MyShaderScene sceneWithSize:self.size];
+            [self.view presentScene:scene transition:tran];
+            *stop = true ;
+        }
       
     }];
 }

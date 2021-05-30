@@ -12,6 +12,9 @@
 		B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B062EB84265EA54400C3134A /* SpaceshipScene.m */; };
 		B077170C266383EA00F6AAEF /* bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077170B266383EA00F6AAEF /* bomb.wav */; };
 		B077171326638C9C00F6AAEF /* bubble.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077171226638C9C00F6AAEF /* bubble.wav */; };
+		B07717172663C7D200F6AAEF /* MyShaderScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B07717162663C7D200F6AAEF /* MyShaderScene.m */; };
+		B077171B2663D66600F6AAEF /* gradientStroke.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B077171A2663D66600F6AAEF /* gradientStroke.fsh */; };
+		B077171F2663E2D400F6AAEF /* fadeStroke.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B077171E2663E2D400F6AAEF /* fadeStroke.fsh */; };
 		B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B6070B265A28B900CEBA14 /* AppDelegate.m */; };
 		B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070D265A28B900CEBA14 /* GameScene.sks */; };
 		B0B60710265A28B900CEBA14 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070F265A28B900CEBA14 /* Actions.sks */; };
@@ -33,6 +36,10 @@
 		B062EB84265EA54400C3134A /* SpaceshipScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceshipScene.m; sourceTree = "<group>"; };
 		B077170B266383EA00F6AAEF /* bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb.wav; sourceTree = "<group>"; };
 		B077171226638C9C00F6AAEF /* bubble.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubble.wav; sourceTree = "<group>"; };
+		B07717152663C7D200F6AAEF /* MyShaderScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShaderScene.h; sourceTree = "<group>"; };
+		B07717162663C7D200F6AAEF /* MyShaderScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShaderScene.m; sourceTree = "<group>"; };
+		B077171A2663D66600F6AAEF /* gradientStroke.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = gradientStroke.fsh; sourceTree = "<group>"; };
+		B077171E2663E2D400F6AAEF /* fadeStroke.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fadeStroke.fsh; sourceTree = "<group>"; };
 		B0B60707265A28B900CEBA14 /* MyFirstGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFirstGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B6070A265A28B900CEBA14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0B6070B265A28B900CEBA14 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -75,6 +82,15 @@
 			path = art;
 			sourceTree = "<group>";
 		};
+		B07717192663D5F500F6AAEF /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				B077171A2663D66600F6AAEF /* gradientStroke.fsh */,
+				B077171E2663E2D400F6AAEF /* fadeStroke.fsh */,
+			);
+			path = shader;
+			sourceTree = "<group>";
+		};
 		B0B606FE265A28B900CEBA14 = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +110,7 @@
 		B0B60709265A28B900CEBA14 /* MyFirstGame */ = {
 			isa = PBXGroup;
 			children = (
+				B07717192663D5F500F6AAEF /* shader */,
 				B062EB7D265E929B00C3134A /* art */,
 				B0B60730265A42B600CEBA14 /* FirstScene.h */,
 				B0B60731265A42B600CEBA14 /* FirstScene.m */,
@@ -117,6 +134,8 @@
 				B062EB84265EA54400C3134A /* SpaceshipScene.m */,
 				B00068F52660761B002EFF96 /* SpaceWarsScene.h */,
 				B00068F62660761B002EFF96 /* SpaceWarsScene.m */,
+				B07717152663C7D200F6AAEF /* MyShaderScene.h */,
+				B07717162663C7D200F6AAEF /* MyShaderScene.m */,
 			);
 			path = MyFirstGame;
 			sourceTree = "<group>";
@@ -179,11 +198,13 @@
 			files = (
 				B077170C266383EA00F6AAEF /* bomb.wav in Resources */,
 				B0B60719265A28B900CEBA14 /* Main.storyboard in Resources */,
+				B077171F2663E2D400F6AAEF /* fadeStroke.fsh in Resources */,
 				B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */,
 				B0B6071B265A28B900CEBA14 /* Assets.xcassets in Resources */,
 				B077171326638C9C00F6AAEF /* bubble.wav in Resources */,
 				B0B60710265A28B900CEBA14 /* Actions.sks in Resources */,
 				B062EB7F265E92B900C3134A /* Spaceship.png in Resources */,
+				B077171B2663D66600F6AAEF /* gradientStroke.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +218,7 @@
 				B0B60713265A28B900CEBA14 /* GameScene.m in Sources */,
 				B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */,
 				B0B60716265A28B900CEBA14 /* GameViewController.m in Sources */,
+				B07717172663C7D200F6AAEF /* MyShaderScene.m in Sources */,
 				B0B6071E265A28B900CEBA14 /* main.m in Sources */,
 				B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */,
 				B0B6073C265A94A000CEBA14 /* MainMenuScene.m in Sources */,
