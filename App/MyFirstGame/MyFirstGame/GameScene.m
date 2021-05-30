@@ -29,9 +29,9 @@
     
     [_spinnyNode runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:M_PI duration:1]]];
     [_spinnyNode runAction:[SKAction sequence:@[
-                                                [SKAction waitForDuration:0.5],
-                                                [SKAction fadeOutWithDuration:0.5],
-                                                [SKAction removeFromParent],
+                                                [SKAction waitForDuration:0.5],         // 效果保持
+                                                [SKAction fadeOutWithDuration:0.5],     // 逐渐淡出
+                                                [SKAction removeFromParent],            // 最后从父节点中移除
                                                 ]]];
     
 }

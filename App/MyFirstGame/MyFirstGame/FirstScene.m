@@ -22,7 +22,7 @@
 // called when SKView present SKScene
 -(void) didMoveToView:(SKView*) view
 {
-    deviceInit();
+   
     
     UIDevice* device = [UIDevice currentDevice];
     NSString* deviceInfo = [NSString stringWithFormat:@"%@-%@-%@",
@@ -102,7 +102,8 @@
     
     //----------------------------------------------------------------------------------
     speed = -5.0;
-}
+    
+ }
 
 /*
     SpriteKit 内建游戏循环机制

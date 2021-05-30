@@ -19,6 +19,6 @@
 extern int gDeviceType ;
 extern CGSize gScreenSize ;
 
-void deviceInit();
+void deviceInit(void);
 
 #endif /* CApp_h */

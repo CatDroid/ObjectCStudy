@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B00068F72660761B002EFF96 /* SpaceWarsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B00068F62660761B002EFF96 /* SpaceWarsScene.m */; };
+		B062EB7F265E92B900C3134A /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B062EB7E265E92B900C3134A /* Spaceship.png */; };
+		B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B062EB84265EA54400C3134A /* SpaceshipScene.m */; };
 		B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B6070B265A28B900CEBA14 /* AppDelegate.m */; };
 		B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070D265A28B900CEBA14 /* GameScene.sks */; };
 		B0B60710265A28B900CEBA14 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070F265A28B900CEBA14 /* Actions.sks */; };
@@ -21,6 +24,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B00068F52660761B002EFF96 /* SpaceWarsScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaceWarsScene.h; sourceTree = "<group>"; };
+		B00068F62660761B002EFF96 /* SpaceWarsScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceWarsScene.m; sourceTree = "<group>"; };
+		B062EB7E265E92B900C3134A /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		B062EB83265EA54400C3134A /* SpaceshipScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaceshipScene.h; sourceTree = "<group>"; };
+		B062EB84265EA54400C3134A /* SpaceshipScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceshipScene.m; sourceTree = "<group>"; };
 		B0B60707265A28B900CEBA14 /* MyFirstGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFirstGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B6070A265A28B900CEBA14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0B6070B265A28B900CEBA14 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B062EB7D265E929B00C3134A /* art */ = {
+			isa = PBXGroup;
+			children = (
+				B062EB7E265E92B900C3134A /* Spaceship.png */,
+			);
+			path = art;
+			sourceTree = "<group>";
+		};
 		B0B606FE265A28B900CEBA14 = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +88,7 @@
 		B0B60709265A28B900CEBA14 /* MyFirstGame */ = {
 			isa = PBXGroup;
 			children = (
+				B062EB7D265E929B00C3134A /* art */,
 				B0B60730265A42B600CEBA14 /* FirstScene.h */,
 				B0B60731265A42B600CEBA14 /* FirstScene.m */,
 				B0B6070A265A28B900CEBA14 /* AppDelegate.h */,
@@ -90,6 +107,10 @@
 				B0B60736265A525B00CEBA14 /* CApp.m */,
 				B0B6073A265A94A000CEBA14 /* MainMenuScene.h */,
 				B0B6073B265A94A000CEBA14 /* MainMenuScene.m */,
+				B062EB83265EA54400C3134A /* SpaceshipScene.h */,
+				B062EB84265EA54400C3134A /* SpaceshipScene.m */,
+				B00068F52660761B002EFF96 /* SpaceWarsScene.h */,
+				B00068F62660761B002EFF96 /* SpaceWarsScene.m */,
 			);
 			path = MyFirstGame;
 			sourceTree = "<group>";
@@ -154,6 +175,7 @@
 				B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */,
 				B0B6071B265A28B900CEBA14 /* Assets.xcassets in Resources */,
 				B0B60710265A28B900CEBA14 /* Actions.sks in Resources */,
+				B062EB7F265E92B900C3134A /* Spaceship.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,11 +187,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0B60713265A28B900CEBA14 /* GameScene.m in Sources */,
+				B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */,
 				B0B60716265A28B900CEBA14 /* GameViewController.m in Sources */,
 				B0B6071E265A28B900CEBA14 /* main.m in Sources */,
 				B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */,
 				B0B6073C265A94A000CEBA14 /* MainMenuScene.m in Sources */,
 				B0B60732265A42B600CEBA14 /* FirstScene.m in Sources */,
+				B00068F72660761B002EFF96 /* SpaceWarsScene.m in Sources */,
 				B0B60737265A525B00CEBA14 /* CApp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,7 +246,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

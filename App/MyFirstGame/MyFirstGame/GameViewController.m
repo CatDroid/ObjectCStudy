@@ -8,6 +8,7 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 #import "FirstScene.h"
+#import "MainMenuScene.h"
 
 @implementation GameViewController
 
@@ -18,8 +19,8 @@
     //GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];
     // GameScene* scene = [GameScene unarchiveFormFile:@"GameScene"]; //?? 已经没有这个
     //FirstScene* scene = [FirstScene sceneWithSize:CGSizeMake(320,568)];
-    FirstScene* scene = [FirstScene sceneWithSize:self.view.bounds.size]; // iphoneXR (width = 320, height = 480)
-    
+    //FirstScene* scene = [FirstScene sceneWithSize:self.view.bounds.size]; // iphoneXR (width = 320, height = 480)
+    MainMenuScene * scene = [MainMenuScene sceneWithSize:self.view.bounds.size];
     // CGSizeMake CGPointMake CGRectMake
     // NSMakeRange
 
