@@ -7,6 +7,7 @@
 
 #import "SpaceWarsScene.h"
 #import "CApp.h"
+#import "AVFoundation/AVFoundation.h"
 
 #define ROCK_COUNT 4
 
@@ -21,15 +22,41 @@
     SKSpriteNode* spaceship ;
     CGPoint beganTPoint ;
     CGPoint beganSPoint ;
+    AVAudioPlayer* player ;
 }
 
 
 
 -(void) didMoveToView:(SKView *)view
 {
+    // 设置外放声音
+    // 使用AudioPlay 必须要有这个 AVAudioSession  AudioPlayer使用/SKAction跟AVAudioSession没有关系 但是AVAudioSession决定有没有音乐
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+    //SKAction* audio = [SKAction playSoundFileNamed:@"bomb.wav" waitForCompletion:NO];
+    //[self runAction:[SKAction repeatActionForever:audio]];
+    
+    NSURL* audioUrl = [[NSBundle mainBundle] URLForResource:@"bubble" withExtension:@"wav"];
+    NSError* myError ;
+    //AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:&myError]; // 局部对象 这样会销毁了
+    player = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:&myError];
+    if (myError != NULL) {
+        NSLog(@"player create fail %@", myError);
+    }
+    player.numberOfLoops = -1 ;
+    //[player prepareToPlay]; // it's ok
+    BOOL success = [player play];
+    if (!success) {
+        NSLog(@"player play fail");
+    }
+    
     [self createNodes];
     
+
 }
+
 
 -(void) createNodes
 {
@@ -154,12 +181,20 @@
         {
             // 碰撞
             NSLog(@"contains !!");
-            SKAction* fout = [SKAction fadeOutWithDuration:1];
-            SKAction* await = [SKAction waitForDuration:0.5];
-            SKAction* fin = [SKAction fadeInWithDuration:1];
+            SKAction* fout = [SKAction fadeOutWithDuration:0.5];
+            SKAction* await = [SKAction waitForDuration:0.2];
+            SKAction* fin = [SKAction fadeInWithDuration:0.5];
             SKAction* crash = [SKAction sequence:@[fout, await, fin]];
-            [spaceship runAction:crash completion:^{
-                            NSLog(@"crash complete");
+            SKAction* audio = [SKAction playSoundFileNamed:@"bomb.wav" waitForCompletion:NO]; // auido其实是 SKPlaySound 必须先要配置AVAudioSession
+            SKAction* group = [SKAction group:@[crash, audio]]; // SKGroup
+            
+            // NSURL* audioUrl = [[NSBundle mainBundle] URLForResource:@"bomb" withExtension:@"wav"];
+            // AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:nil];
+            // [player play];
+            
+            [spaceship runAction:group completion:^{
+                NSLog(@"crash complete");
+                //[player stop];
             }];
             
             rocks[i].position = CGPointMake(rocks[i].size.width + arc4random() % (uint32_t)(self.frame.size.width - rocks[i].size.width),

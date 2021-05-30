@@ -42,6 +42,15 @@
         
         [spaceship addChild:light];
         
+        SKAction* zoomOut = [SKAction scaleBy:2.0 duration:1];
+        SKAction* zoomIn = [SKAction scaleBy:1/2.0 duration:1];
+        SKAction* zoomSeq = [SKAction sequence:@[zoomOut, [SKAction waitForDuration:1], zoomIn]];
+        SKAction* fadeSeq = [SKAction sequence:@[[SKAction fadeAlphaBy:0.8 duration:1], [SKAction waitForDuration:1],[SKAction fadeAlphaBy:1/0.8 duration:1]]];
+        SKAction* group = [SKAction group:@[zoomSeq,fadeSeq]]; // group是同时开始  sequence是一个个执行
+        SKAction* repeatGroup = [SKAction repeatActionForever:group];
+        [spaceship runAction:repeatGroup];
+        
+        
         
         SKTexture* rockpng = [SKTexture textureWithImageNamed:@"Spaceship.png"]; // 如果找不到 会显示一个大红色X
         SKTexture* rock1 = [SKTexture textureWithRect:CGRectMake(0.125*0, 0,  0.125, 1) inTexture:rockpng]; // 归一化 与锚点坐标系一样
@@ -62,6 +71,15 @@
         NSMutableArray<SKNode*>* array = [NSMutableArray arrayWithCapacity:3]; // 会预留但是是nil
         NSLog(@"count = %lu", array.count); // 0
         array[0] = r1 ;
+        
+        // typedef const struct CGPath *CGPathRef;
+        CGPathRef myPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 80, 100), nil);
+        // CGPathCreateWithRect(<#CGRect rect#>, const CGAffineTransform * _Nullable transform)  // CGAffineTransform ??
+        // [SKAction followPath:<#(nonnull CGPathRef)#> speed:<#(CGFloat)#>]
+        //SKAction* pathAction = [SKAction followPath:myPath speed:2.0];
+        SKAction* pathAction = [SKAction followPath:myPath duration:8];// 如何实现根据时间 判断速度??
+        [array[0] runAction:pathAction];
+
         for(int i = 1 ; i < 3; i++)
         {
             array[i] = [r1 copy];

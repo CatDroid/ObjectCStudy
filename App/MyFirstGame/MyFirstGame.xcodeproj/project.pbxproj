@@ -10,6 +10,8 @@
 		B00068F72660761B002EFF96 /* SpaceWarsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B00068F62660761B002EFF96 /* SpaceWarsScene.m */; };
 		B062EB7F265E92B900C3134A /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B062EB7E265E92B900C3134A /* Spaceship.png */; };
 		B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B062EB84265EA54400C3134A /* SpaceshipScene.m */; };
+		B077170C266383EA00F6AAEF /* bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077170B266383EA00F6AAEF /* bomb.wav */; };
+		B077171326638C9C00F6AAEF /* bubble.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077171226638C9C00F6AAEF /* bubble.wav */; };
 		B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B6070B265A28B900CEBA14 /* AppDelegate.m */; };
 		B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070D265A28B900CEBA14 /* GameScene.sks */; };
 		B0B60710265A28B900CEBA14 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070F265A28B900CEBA14 /* Actions.sks */; };
@@ -29,6 +31,8 @@
 		B062EB7E265E92B900C3134A /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		B062EB83265EA54400C3134A /* SpaceshipScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaceshipScene.h; sourceTree = "<group>"; };
 		B062EB84265EA54400C3134A /* SpaceshipScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceshipScene.m; sourceTree = "<group>"; };
+		B077170B266383EA00F6AAEF /* bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb.wav; sourceTree = "<group>"; };
+		B077171226638C9C00F6AAEF /* bubble.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubble.wav; sourceTree = "<group>"; };
 		B0B60707265A28B900CEBA14 /* MyFirstGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFirstGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B6070A265A28B900CEBA14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0B6070B265A28B900CEBA14 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -64,6 +68,8 @@
 		B062EB7D265E929B00C3134A /* art */ = {
 			isa = PBXGroup;
 			children = (
+				B077171226638C9C00F6AAEF /* bubble.wav */,
+				B077170B266383EA00F6AAEF /* bomb.wav */,
 				B062EB7E265E92B900C3134A /* Spaceship.png */,
 			);
 			path = art;
@@ -171,9 +177,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B077170C266383EA00F6AAEF /* bomb.wav in Resources */,
 				B0B60719265A28B900CEBA14 /* Main.storyboard in Resources */,
 				B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */,
 				B0B6071B265A28B900CEBA14 /* Assets.xcassets in Resources */,
+				B077171326638C9C00F6AAEF /* bubble.wav in Resources */,
 				B0B60710265A28B900CEBA14 /* Actions.sks in Resources */,
 				B062EB7F265E92B900C3134A /* Spaceship.png in Resources */,
 			);
