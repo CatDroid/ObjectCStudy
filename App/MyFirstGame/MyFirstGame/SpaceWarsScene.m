@@ -181,24 +181,41 @@
         {
             // 碰撞
             NSLog(@"contains !!");
-            SKAction* fout = [SKAction fadeOutWithDuration:0.5];
-            SKAction* await = [SKAction waitForDuration:0.2];
-            SKAction* fin = [SKAction fadeInWithDuration:0.5];
-            SKAction* crash = [SKAction sequence:@[fout, await, fin]];
-            SKAction* audio = [SKAction playSoundFileNamed:@"bomb.wav" waitForCompletion:NO]; // auido其实是 SKPlaySound 必须先要配置AVAudioSession
-            SKAction* group = [SKAction group:@[crash, audio]]; // SKGroup
-            
-            // NSURL* audioUrl = [[NSBundle mainBundle] URLForResource:@"bomb" withExtension:@"wav"];
-            // AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl error:nil];
-            // [player play];
-            
-            [spaceship runAction:group completion:^{
-                NSLog(@"crash complete");
-                //[player stop];
-            }];
-            
-            rocks[i].position = CGPointMake(rocks[i].size.width + arc4random() % (uint32_t)(self.frame.size.width - rocks[i].size.width),
-                                            self.frame.size.height + rocks[i].frame.size.height + arc4random() % 50 );
+            SKAction* old = [spaceship actionForKey:@"crash"]; // 查找动作 动作执行完成会自己从节点移除
+            // removeActionForKey 移动节点上特定的动作
+            // removeAllActions  移除节点上所有动作
+            // BOOL hasAction = [spaceship hasActions] 判断节点是否有动作
+            if(old == NULL)
+            {
+                SKAction* fout = [SKAction fadeOutWithDuration:0.5];
+                SKAction* await = [SKAction waitForDuration:0.2];
+                SKAction* fin = [SKAction fadeInWithDuration:0.5];
+                SKAction* crash = [SKAction sequence:@[fout, await, fin]];
+                SKAction* audio = [SKAction playSoundFileNamed:@"bomb.wav" waitForCompletion:NO]; // auido其实是 SKPlaySound 必须先要配置AVAudioSession
+                SKAction* group = [SKAction group:@[crash, audio]]; // SKGroup
+                
+                SKAction* complete = [SKAction runBlock:^{
+                    NSLog(@"crash complete");
+                    /*
+                     Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
+                     
+                     意思是block中使用了self的实例变量rocks，因此block会隐式的retain住self
+                     Xcode认为这可能会给开发者造成困惑，或者因此而因袭循环引用
+                     所以警告我们要显式的在block中使用self，以达到block显式retain住self的目的。
+                     */
+                    
+                    //rocks[i].position = CGPointMake(rocks[i].size.width + arc4random() % (uint32_t)(self.frame.size.width - rocks[i].size.width),
+                    //                                self.frame.size.height + rocks[i].frame.size.height + arc4random() % 50 );
+                    self->rocks[i].position = CGPointMake(self->rocks[i].size.width + arc4random() % (uint32_t)(self.frame.size.width - self->rocks[i].size.width),
+                                                    self.frame.size.height + self->rocks[i].frame.size.height + arc4random() % 50 );
+                }];
+               
+               
+                
+                //[spaceship runAction:group withKey:@"collsion" completion:^{ // 没有同时withKey和complete的接口
+               [spaceship runAction:[SKAction sequence:@[group,complete]] withKey:@"crash"]; // 给动作命名， 动作执行完成会自己从节点移除
+                
+            }
         }
     }
     
