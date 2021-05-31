@@ -14,6 +14,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 必须要加到APP初始化开头
+    // 显示哪个Render在使用 OpenGL/Metal
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary* dict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:true] forKey:@"debugDrawStats_SKContextType"];
+    // Supply the dictionary with the SpriteKit defaults key
+    [defaults setObject:dict forKey:@"SKDefaults"];
+    
 
     // Load the SKScene from 'GameScene.sks'  从文件GameScene.sks中加载场景
     //GameScene *scene = (GameScene *)[SKScene nodeWithFileNamed:@"GameScene"];

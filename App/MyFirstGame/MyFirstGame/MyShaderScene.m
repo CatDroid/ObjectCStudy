@@ -14,6 +14,9 @@
     SKUniform* endColorUniform ;
     SKUniform* strokeLengthUniform ;
     CGFloat _strokeLengthFloat ;
+    
+    SKUniform* checkerRadiumUniform ;
+    CGFloat _checkerRadiumFloat ;
 }
 
 -(CGFloat) strokeLengthFloat
@@ -26,6 +29,18 @@
     _strokeLengthFloat = value ;
     strokeLengthUniform.floatValue = value ;
 }
+
+-(CGFloat) checkerRadiumFloat
+{
+    return _checkerRadiumFloat ;
+}
+
+-(void) setCheckerRadiumFloat:(CGFloat) value
+{
+    _checkerRadiumFloat = value ;
+    checkerRadiumUniform.vectorFloat2Value = (vector_float2){value, value};
+}
+
 
 -(void) didMoveToView:(SKView *)view
 {
@@ -51,10 +66,10 @@
      */
     SKShader* fadeShader = [SKShader shaderWithFileNamed:@"fadeStroke.fsh"];
     
-    SKShapeNode* fadeStrokeNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,200,150) cornerRadius:10];
+    SKShapeNode* fadeStrokeNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,150,100) cornerRadius:10];
     fadeStrokeNode.lineWidth = 17.0;
     fadeStrokeNode.strokeShader = fadeShader;
-    fadeStrokeNode.position = CGPointMake(0, self.frame.size.height * 0.15);
+    fadeStrokeNode.position = CGPointMake(100, self.frame.size.height * 0.75);
     [self addChild:fadeStrokeNode];
     
     
@@ -68,15 +83,34 @@
     endColorUniform = [SKUniform uniformWithName:@"u_color_end" vectorFloat4:endColor];
     strokeLengthUniform = [SKUniform uniformWithName:@"u_current_percentage" float:0.5];
     
-   
+    // https://developer.apple.com/documentation/spritekit/skshader/executing_shaders_in_metal_and_opengl?language=objc
+    // https://developer.apple.com/documentation/spritekit/skshapenode/controlling_shape_drawing_with_shaders?language=objc
+    // shaderNode.strokeShader 使用的是OpenGLES的shader
+    // 提供给SKShader的glsl代码会被转换成metal着色器语言 并运行在metal渲染器上 在旧的机器上还是运行opengl着色器(调试效果需要注意)
+    
+    // SpriteKit renders with Metal in iOS 9 and OS X 10.11,
+    // 可以指定你的设备使用哪个渲染器
+    // 例如，强制一个启用了metal的设备使用SpriteKit的OpenGL渲染器进行调试
+    // 通过在你的应用程序的Info.plist中添加一个PrefersOpenGL=true  (SceneKit SpriteKit都会影响)
+    // 为了兼容所有设备 建议在设置和不设置 PrefersOpenGL 这个key时候的效果
+    
     gShader = [SKShader shaderWithFileNamed:@"gradientStroke.fsh"];
     gShader.uniforms = @[strokeLengthUniform, startColorUniform, endColorUniform];
+    // shader每次渲染都会读取 这些SKUniform, 在CPU端update, 逻辑更新这个值, 就可更新传入shader中的值
+    
+    SKShader* fillShader = [SKShader shaderWithFileNamed:@"checkerboardFill.fsh"];
+    CGSize size = CGSizeMake(200, 200);
+    checkerRadiumUniform = [SKUniform uniformWithName:@"u_texture_size" vectorFloat2: (vector_float2){size.width, size.height}];
+    fillShader.uniforms = @[checkerRadiumUniform];
     
     SKShapeNode* shaderNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,200,150) cornerRadius:10];
     shaderNode.lineWidth = 17.0;
     shaderNode.strokeShader = gShader;
+    shaderNode.fillShader = fillShader;
     shaderNode.position = CGPointMake(50, self.frame.size.height * 0.05);
     [self addChild:shaderNode];
+    
+
     
 }
 
@@ -86,6 +120,12 @@
     self.strokeLengthFloat += 0.01;
     if (self.strokeLengthFloat > 1.0) {
         self.strokeLengthFloat = 0.0;
+        
+        self.checkerRadiumFloat += 50;
+        if (self.checkerRadiumFloat > 1000)
+        {
+            self.checkerRadiumFloat = 50;
+        }
     }
 }
 

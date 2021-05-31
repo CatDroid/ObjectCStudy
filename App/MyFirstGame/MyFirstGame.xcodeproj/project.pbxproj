@@ -10,6 +10,7 @@
 		B00068F72660761B002EFF96 /* SpaceWarsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B00068F62660761B002EFF96 /* SpaceWarsScene.m */; };
 		B062EB7F265E92B900C3134A /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B062EB7E265E92B900C3134A /* Spaceship.png */; };
 		B062EB85265EA54400C3134A /* SpaceshipScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B062EB84265EA54400C3134A /* SpaceshipScene.m */; };
+		B07192A226652DA40088A0A9 /* checkerboardFill.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B07192A126652DA40088A0A9 /* checkerboardFill.fsh */; };
 		B077170C266383EA00F6AAEF /* bomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077170B266383EA00F6AAEF /* bomb.wav */; };
 		B077171326638C9C00F6AAEF /* bubble.wav in Resources */ = {isa = PBXBuildFile; fileRef = B077171226638C9C00F6AAEF /* bubble.wav */; };
 		B07717172663C7D200F6AAEF /* MyShaderScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B07717162663C7D200F6AAEF /* MyShaderScene.m */; };
@@ -34,6 +35,7 @@
 		B062EB7E265E92B900C3134A /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		B062EB83265EA54400C3134A /* SpaceshipScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaceshipScene.h; sourceTree = "<group>"; };
 		B062EB84265EA54400C3134A /* SpaceshipScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpaceshipScene.m; sourceTree = "<group>"; };
+		B07192A126652DA40088A0A9 /* checkerboardFill.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = checkerboardFill.fsh; sourceTree = "<group>"; };
 		B077170B266383EA00F6AAEF /* bomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bomb.wav; sourceTree = "<group>"; };
 		B077171226638C9C00F6AAEF /* bubble.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubble.wav; sourceTree = "<group>"; };
 		B07717152663C7D200F6AAEF /* MyShaderScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShaderScene.h; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			children = (
 				B077171A2663D66600F6AAEF /* gradientStroke.fsh */,
 				B077171E2663E2D400F6AAEF /* fadeStroke.fsh */,
+				B07192A126652DA40088A0A9 /* checkerboardFill.fsh */,
 			);
 			path = shader;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				B077170C266383EA00F6AAEF /* bomb.wav in Resources */,
 				B0B60719265A28B900CEBA14 /* Main.storyboard in Resources */,
 				B077171F2663E2D400F6AAEF /* fadeStroke.fsh in Resources */,
+				B07192A226652DA40088A0A9 /* checkerboardFill.fsh in Resources */,
 				B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */,
 				B0B6071B265A28B900CEBA14 /* Assets.xcassets in Resources */,
 				B077171326638C9C00F6AAEF /* bubble.wav in Resources */,
