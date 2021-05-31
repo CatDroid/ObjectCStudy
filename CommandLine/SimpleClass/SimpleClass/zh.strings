@@ -1,0 +1,10 @@
+/* 
+  zh.strings
+  SimpleClass
+
+  Created by hehanlong on 2021/5/16.
+  
+*/
+
+"hello"="你好";
+"world"="世界“;
