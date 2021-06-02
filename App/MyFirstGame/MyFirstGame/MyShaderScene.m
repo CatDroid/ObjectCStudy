@@ -66,11 +66,16 @@
      */
     SKShader* fadeShader = [SKShader shaderWithFileNamed:@"fadeStroke.fsh"];
     
-    SKShapeNode* fadeStrokeNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,150,100) cornerRadius:10];
+    SKShapeNode* fadeStrokeNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,150,100) cornerRadius:10]; // 圆角矩形
     fadeStrokeNode.lineWidth = 17.0;
     fadeStrokeNode.strokeShader = fadeShader;
     fadeStrokeNode.position = CGPointMake(100, self.frame.size.height * 0.75);
     [self addChild:fadeStrokeNode];
+    
+    
+    //---------------------------------------------------------------------------------------------
+    
+ 
     
     
     //---------------------------------------------------------------------------------------------
@@ -103,14 +108,26 @@
     checkerRadiumUniform = [SKUniform uniformWithName:@"u_texture_size" vectorFloat2: (vector_float2){size.width, size.height}];
     fillShader.uniforms = @[checkerRadiumUniform];
     
-    SKShapeNode* shaderNode = [SKShapeNode shapeNodeWithRect:CGRectMake(0,0,200,150) cornerRadius:10];
-    shaderNode.lineWidth = 17.0;
+    SKShapeNode* shaderNode = [SKShapeNode shapeNodeWithCircleOfRadius:50]; // 圆形
+    shaderNode.lineWidth = 10.0;
     shaderNode.strokeShader = gShader;
     shaderNode.fillShader = fillShader;
-    shaderNode.position = CGPointMake(50, self.frame.size.height * 0.05);
+    shaderNode.position = CGPointMake(80, self.frame.size.height * 0.1);
     [self addChild:shaderNode];
     
 
+    // SKVideoNode videoNodeWithAVPlayer: 使用现成的AVPlayer对象创建和初始化SKVideoNode
+ 
+    NSBundle* mainBundle = [NSBundle mainBundle];
+    NSURL* urlPath = [mainBundle URLForResource:@"temp" withExtension:@"mp4"];
+    SKVideoNode* vdo = [SKVideoNode videoNodeWithURL:urlPath];
+    vdo.position = CGPointMake(300, 100);
+    vdo.anchorPoint = CGPointMake(0.5, 0.5);
+    vdo.size = CGSizeMake(100, 100); // 无法知道视频大小进行缩放
+     
+    [self addChild:vdo];
+    [vdo play]; // 只有play和pause
+   
     
 }
 

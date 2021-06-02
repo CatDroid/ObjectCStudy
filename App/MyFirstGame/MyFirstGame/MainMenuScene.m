@@ -68,6 +68,20 @@
     shape.position = CGPointMake(self.frame.size.width /2 , self.frame.size.height /2);
     [self addChild:shape];
     
+    
+    // 给点点连成线条
+    CGPoint temp[] = {
+        CGPointMake(0,0),
+        CGPointMake(50,200),
+        CGPointMake(80,220),
+    };
+    SKShapeNode* line = [SKShapeNode shapeNodeWithPoints:temp count:sizeof(temp)/sizeof(temp[0])];
+    line.position = CGPointMake(20, self.frame.size.height * 0.3);
+    line.fillColor = [UIColor blueColor]; // 线条不会连接起来，但是fillcolor是所有点围成区域填充
+    line.strokeColor = [UIColor yellowColor]; // 连线的颜色
+    [self addChild:line];
+    
+    
 }
 
 
