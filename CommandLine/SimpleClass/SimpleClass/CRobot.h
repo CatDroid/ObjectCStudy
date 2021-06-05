@@ -71,6 +71,7 @@
 
 @property int _id;
 @property NSString* _model;
+@property NSString* name ;
 
 -(instancetype)initId:(int)_id withModel:(NSString*)_model NS_DESIGNATED_INITIALIZER;
 

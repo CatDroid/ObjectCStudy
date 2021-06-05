@@ -31,8 +31,9 @@
 -(void) goHome
 {
 	self->_x = 0; // 如果是实例变量 要用 ->
-	self->_y = 0;
-	NSLog(@"goHome Done %i-%@", self._id, self._model);
+	self->_y = 0; // 对于属性 可以用_name访问 或者 self.name 访问 _id要使用 self._id 或者 __id 来访问
+	NSLog(@"goHome Done %@ %i-%@", _name, self._id, self._model);
+    
 }
 
 -(void) moveToX:(int)x Y:(int)y
