@@ -82,6 +82,63 @@
     [self addChild:line];
     
     
+    // SKEffectNode 将其子节点渲染到单独的缓冲区中 可以应用effect 比如Core Image filter, 在最后渲染结果之前
+    // 每次渲染 effectNode会做如下内容
+    //
+    // It draws its children into a private framebuffer. 渲染子节点到一个单独的fbo
+    // It applies a Core Image effect to the private framebuffer. 渲染滤镜 This stage is optional; see the filter and shouldEnableEffects properties.
+    // It blends the contents of its private framebuffer into its parent’s framebuffer, using one of the standard sprite blend modes. 渲染到父fbo
+    // It discards its private framebuffer. This step is optional; see the shouldRasterize property. 丢弃其私有fbo 可选 使用 shouldRasterize 属性
+    
+    SKEffectNode* effect = [[SKEffectNode alloc] init];
+    // effect.filter   应用 Core Image filter
+    // effect.shader   当渲染到父fbo时候使用的shader
+    // effect.shouldRasterize  是否保留渲染子节点的缓冲fbo
+    // effect.blendMode 如何把节点内容混合到父节点!!
+    //         SKBlendModeAlpha    output.rgba = dst.rgba * (1 - alpha) + src.rgba * alpha.
+    //         SKBlendModeAdd      output.rgba = dst.rgba + src.rgba
+    //         SKBlendModeSubtract  src - dst
+    //         SKBlendModeReplace The source color replaces the destination color.
+    effect.blendMode = SKBlendModeReplace ; //  这个不是两个childnode的混合 而是effectNode如何把私有的fbo混合到父节点
+    
+    SKSpriteNode* redNode = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] size:CGSizeMake(50, 50)];
+    SKSpriteNode* yellowNode = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:0.5] size:CGSizeMake(50, 50)];
+    // 正 z 轴指向观察者，以便具有较大 z 位置值的节点更靠近观察者。
+    // 从最小 z 位置值到最大 z 位置值渲染树中的所有节点。
+    // 如果多个节点共享相同的 z 位置，则对这些节点进行排序，以便父节点在其子节点之前绘制，并且兄弟节点按照它们在父节点的子节点数组中出现的顺序呈现。
+    // SKView的ignoresSiblingOrder属性 控制是否同样z值是否需要排序
+    
+    //redNode.zPosition = 10; // The default value is 0.0.
+    //yellowNode.zPosition = 20; // 如果zPosition不一样 深度检测会抛弃另外一个 所有没有混合
+    redNode.zPosition = 0;
+    yellowNode.zPosition = 0;
+ 
+    //  redNode.blendMode
+    //redNode.colorBlendFactor = 1.0; // colorBlendFactor属性则是指Blend的程度。0表示没有blend，1表示最大程度的blend
+    redNode.blendMode = SKBlendModeAlpha; // alpha是默认值
+    //yellowNode.colorBlendFactor = 1.0;
+    yellowNode.blendMode = SKBlendModeAlpha;
+    
+    /*
+     // Equations
+     output.r = src.r * src.alpha + dst.r * (1 - src.alpha);
+     output.g = src.g * src.alpha + dst.g * (1 - src.alpha);
+     output.b = src.b * src.alpha + dst.b * (1 - src.alpha);
+     output.a = src.a * src.alpha + dst.a * (1 - src.alpha);
+
+     // OpenGL Equivalent
+     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+     */
+    
+
+    [effect addChild:redNode];
+    [effect addChild:yellowNode]; // 如果zPosition一样的话,会按照addChild的先后顺序
+    
+    
+    effect.position = CGPointMake(250, 100);
+    
+    [self addChild:effect];
 }
 
 
