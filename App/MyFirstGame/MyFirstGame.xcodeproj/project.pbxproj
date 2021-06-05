@@ -16,6 +16,8 @@
 		B07717172663C7D200F6AAEF /* MyShaderScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B07717162663C7D200F6AAEF /* MyShaderScene.m */; };
 		B077171B2663D66600F6AAEF /* gradientStroke.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B077171A2663D66600F6AAEF /* gradientStroke.fsh */; };
 		B077171F2663E2D400F6AAEF /* fadeStroke.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B077171E2663E2D400F6AAEF /* fadeStroke.fsh */; };
+		B08CBF462667D29600455B36 /* temp.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B08CBF442667D14400455B36 /* temp.mp4 */; };
+		B08CD57F266B167F00CABA94 /* EnhanceGlowFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B08CD57E266B167F00CABA94 /* EnhanceGlowFilter.m */; };
 		B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B6070B265A28B900CEBA14 /* AppDelegate.m */; };
 		B0B6070E265A28B900CEBA14 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070D265A28B900CEBA14 /* GameScene.sks */; };
 		B0B60710265A28B900CEBA14 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0B6070F265A28B900CEBA14 /* Actions.sks */; };
@@ -42,6 +44,9 @@
 		B07717162663C7D200F6AAEF /* MyShaderScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShaderScene.m; sourceTree = "<group>"; };
 		B077171A2663D66600F6AAEF /* gradientStroke.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = gradientStroke.fsh; sourceTree = "<group>"; };
 		B077171E2663E2D400F6AAEF /* fadeStroke.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = fadeStroke.fsh; sourceTree = "<group>"; };
+		B08CBF442667D14400455B36 /* temp.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = temp.mp4; sourceTree = "<group>"; };
+		B08CD57D266B167F00CABA94 /* EnhanceGlowFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnhanceGlowFilter.h; sourceTree = "<group>"; };
+		B08CD57E266B167F00CABA94 /* EnhanceGlowFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnhanceGlowFilter.m; sourceTree = "<group>"; };
 		B0B60707265A28B900CEBA14 /* MyFirstGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyFirstGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B6070A265A28B900CEBA14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0B6070B265A28B900CEBA14 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 		B062EB7D265E929B00C3134A /* art */ = {
 			isa = PBXGroup;
 			children = (
+				B08CBF442667D14400455B36 /* temp.mp4 */,
 				B077171226638C9C00F6AAEF /* bubble.wav */,
 				B077170B266383EA00F6AAEF /* bomb.wav */,
 				B062EB7E265E92B900C3134A /* Spaceship.png */,
@@ -92,6 +98,15 @@
 				B07192A126652DA40088A0A9 /* checkerboardFill.fsh */,
 			);
 			path = shader;
+			sourceTree = "<group>";
+		};
+		B08CD57B266B139600CABA94 /* filter */ = {
+			isa = PBXGroup;
+			children = (
+				B08CD57D266B167F00CABA94 /* EnhanceGlowFilter.h */,
+				B08CD57E266B167F00CABA94 /* EnhanceGlowFilter.m */,
+			);
+			path = filter;
 			sourceTree = "<group>";
 		};
 		B0B606FE265A28B900CEBA14 = {
@@ -113,6 +128,7 @@
 		B0B60709265A28B900CEBA14 /* MyFirstGame */ = {
 			isa = PBXGroup;
 			children = (
+				B08CD57B266B139600CABA94 /* filter */,
 				B07717192663D5F500F6AAEF /* shader */,
 				B062EB7D265E929B00C3134A /* art */,
 				B0B60730265A42B600CEBA14 /* FirstScene.h */,
@@ -199,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08CBF462667D29600455B36 /* temp.mp4 in Resources */,
 				B077170C266383EA00F6AAEF /* bomb.wav in Resources */,
 				B0B60719265A28B900CEBA14 /* Main.storyboard in Resources */,
 				B077171F2663E2D400F6AAEF /* fadeStroke.fsh in Resources */,
@@ -227,6 +244,7 @@
 				B0B6070C265A28B900CEBA14 /* AppDelegate.m in Sources */,
 				B0B6073C265A94A000CEBA14 /* MainMenuScene.m in Sources */,
 				B0B60732265A42B600CEBA14 /* FirstScene.m in Sources */,
+				B08CD57F266B167F00CABA94 /* EnhanceGlowFilter.m in Sources */,
 				B00068F72660761B002EFF96 /* SpaceWarsScene.m in Sources */,
 				B0B60737265A525B00CEBA14 /* CApp.m in Sources */,
 			);

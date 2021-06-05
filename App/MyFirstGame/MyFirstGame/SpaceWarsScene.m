@@ -8,6 +8,7 @@
 #import "SpaceWarsScene.h"
 #import "CApp.h"
 #import "AVFoundation/AVFoundation.h"
+#import "filter/EnhanceGlowFilter.h"
 
 #define ROCK_COUNT 4
 
@@ -29,6 +30,10 @@
 
 -(void) didMoveToView:(SKView *)view
 {
+    // 设置scene的背景颜色
+    self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
+    
+    
     // 设置外放声音
     // 使用AudioPlay 必须要有这个 AVAudioSession  AudioPlayer使用/SKAction跟AVAudioSession没有关系 但是AVAudioSession决定有没有音乐
     AVAudioSession * session = [AVAudioSession sharedInstance];
@@ -84,7 +89,24 @@
     SKTexture* spaceshipTex = [SKTexture textureWithImageNamed:@"Spaceship.png"];
     spaceship = [SKSpriteNode spriteNodeWithTexture:spaceshipTex size:baseSize];
     spaceship.position = CGPointMake(self.size.width * 0.5 , self.size.height * 0.1 );
-    [self addChild:spaceship];
+    
+    //-----------------------------------------------------------------------
+    SKEffectNode * effectNode = [[SKEffectNode alloc] init];
+    
+    EnhanceGlowFilter* glowFilter = [[EnhanceGlowFilter alloc] init];
+    [glowFilter setGlowColor:[[UIColor yellowColor] colorWithAlphaComponent:0.5]]; // colorWithAlphaComponent 替换原来的alpha分量
+    
+    [effectNode setShouldRasterize:YES];
+    [effectNode setFilter:glowFilter];
+    [self addChild:effectNode];
+    
+    [effectNode addChild:spaceship];
+    
+    // [self addChild:spaceship];
+    
+    //-----------------------------------------------------------------------
+    
+    
     
     SKSpriteNode* light = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(5.,5.)];
     light.position = CGPointMake(0, -baseSize.height * 0.25);
@@ -272,7 +294,7 @@
         CGPoint posInSKScene = [touch locationInNode:self];
         CGFloat xOffset = posInSKScene.x - beganTPoint.x;
         CGFloat yOffset = posInSKScene.y - beganTPoint.y;
-        if (xOffset < 10 && yOffset < 10 ){
+        if (abs(xOffset) < 10 && abs(yOffset) < 10 ){
             // 手势--单击
             [self resetPosition];
         }
