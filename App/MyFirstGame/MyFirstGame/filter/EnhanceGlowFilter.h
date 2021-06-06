@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EnhanceGlowFilter : CIFilter
 
 @property (strong, nonatomic) UIColor *glowColor; // 初始化可以通过 _glowColor设置这个值
+
+// 用属性来声明滤镜的输入参数，属性名必须以input为前缀，例如：inputImage
+// 需要重写outputImage方法
+// 可用重写setDefaults方法来设置默认参数。 在iOS中，CIFilter被创建后会自动调用该方法
 @property (strong, nonatomic) CIImage* inputImage;
 @property (strong, nonatomic) NSNumber* inputRadius;
 @property (strong, nonatomic) CIVector* inputCenter; // CGVector是struct不能用strong strong必须是对象
