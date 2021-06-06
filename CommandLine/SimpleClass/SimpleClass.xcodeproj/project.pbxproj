@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B0769CC4266CDE8D00C3FB00 /* CategoryClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */; };
+		B0769CC7266CFB1C00C3FB00 /* forth.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CC6266CFB1C00C3FB00 /* forth.m */; };
 		B0B606CF2658FB3000CEBA14 /* typeEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B606CE2658FB3000CEBA14 /* typeEncode.m */; };
 		B0DB91B72640277A00EFF18D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91B62640277A00EFF18D /* main.m */; };
 		B0DB91C026402BA600EFF18D /* CRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91BE26402BA600EFF18D /* CRobot.m */; };
@@ -33,6 +34,7 @@
 		B070A6BD26411602009D4227 /* CRobotProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotProtocol.h; sourceTree = "<group>"; };
 		B0769CC2266CDE8D00C3FB00 /* CategoryClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryClass.h; sourceTree = "<group>"; };
 		B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoryClass.m; sourceTree = "<group>"; };
+		B0769CC6266CFB1C00C3FB00 /* forth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = forth.m; sourceTree = "<group>"; };
 		B0B606CE2658FB3000CEBA14 /* typeEncode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = typeEncode.m; sourceTree = "<group>"; };
 		B0DB91B32640277A00EFF18D /* SimpleClass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleClass; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0DB91B62640277A00EFF18D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				B0B606CE2658FB3000CEBA14 /* typeEncode.m */,
 				B0769CC2266CDE8D00C3FB00 /* CategoryClass.h */,
 				B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */,
+				B0769CC6266CFB1C00C3FB00 /* forth.m */,
 			);
 			path = SimpleClass;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0769CC7266CFB1C00C3FB00 /* forth.m in Sources */,
 				B0DB91C026402BA600EFF18D /* CRobot.m in Sources */,
 				B0DB91C82640F3D200EFF18D /* CRobotSoldierSelfDestruct.m in Sources */,
 				B0DB91CB2640F4A000EFF18D /* secondary.m in Sources */,
