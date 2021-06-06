@@ -198,14 +198,15 @@
         [self saveImage:_outImage ToFile:@"CIColorMatrix_main.png"];
     });
 #elif defined(DISPATCH_BACKGOUND)
+    // 进行延迟操作
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), // dispatch_time(dispatch_time_t when, int64_t delta);
                    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self saveImage:_outImage ToFile:@"CIColorMatrix_back.png"];
     });
 #else
     [self saveImage:_outImage ToFile:@"CIColorMatrix_sync.png"];
-#endif
 
+#endif
  
     // Scale
     float centerX = [self.inputCenter X]; // CIVector
@@ -267,6 +268,8 @@
     _outputImage = glowImage;
     
     logOnce = true ;
+    
+    [self dispatchTest];
     
     return glowImage;
     
@@ -362,7 +365,6 @@
     // CGImageRelease(cgimg);
     //}];
     
-    
 }
 /*
  高斯滤镜 半径越小越好, 或者换其他的模糊滤镜
@@ -378,5 +380,176 @@
     在你最喜欢的图形编辑器中制作一个模糊的蓝色太空船，并将其作为另一个精灵放在场景中
  
  */
+
+
+-(void) dispatchTest
+{
+    // 在GCD之前,Cocoa框架提供了NSObject类的
+    // performSelectorInBackground:withObject:实例方法
+    // performSelectorOnMainThread:withObject:waitUntilDone:实例方法
+    // 等简单的多线程编程技术
+    
+    // [self performSelectorInBackground:@selector(doWork) withObject:nil];
+    // [self performSelectorOnMainThread:@selector(doneWork) withObject:nil waitUntilDone:NO];
+    
+    // Dispatch Queue分为4种队列,分别是
+    // Serial Queue(串行队列)
+    //      串行队列（也称为私有调度队列）按顺序将其中一个任务添加到队列中,并且一次只执行一个任务.
+    //      如果创建四个串行队列,每个队列一次只执行一个任务,但最多四个任务可以并发执行,每个队列中有一个任务
+    //      ??? 因为一个串行队列,只生成并使用一个线程,所以创建几个串行队列就生成几个线程,线程过多,会消耗大量内存 ???
+    //      !!! 实际发现执行的线程可能跟其他并发队列的是同一个线程，串行队列只是保证一个block执行返回后再执行下一个block, 所以也要注意嵌套dispatch的死锁 !!!
+    //
+    // Concurrent Queue(并发队列)
+    //      并发队列（也称为全局调度队列）同时执行一个或多个任务，
+    //      但任务仍然按照它们添加到队列的顺序执行.
+    //      当前执行的任务运行在不同线程上,而这些"线程"由"调度队列"所管理.
+    //
+    //      dispatch_queue_create("MySerialDiapatchQueue",      DISPATCH_QUEUE_SERIAL);
+    //      dispatch_queue_create("MyConcurrentDiapatchQueue",  DISPATCH_QUEUE_CONCURRENT);
+    //
+    //      通过dispatch_queue_create生成的队列,不论串行队列还是并发队列,
+    //      它们与默认优先级的全局并发队列的优先级相同.
+    //      所以,可以通过dispatch_set_target_queue(变更生成的队列的执行优先级),将串行队列的优先级改为在后台执行.
+    //
+    // Main Dispatch Queue(主调度队列)
+    //      主调度队列是一个全局可用的串行队列,
+    //      它在应用程序的主线程上执行任务.
+    //      该队列与应用程序的运行循环（如果有的话）一起工作, 即该队列的任务与运行循环的其他"事件源"交叉执行.
+    //
+    // Global Dispatch Queue(全局并发队列)
+    //
+    //      系统为每个应用程序提供四个并发调度队列.
+    //      这些队列对应用程序而言是全局的,而且只对它们的优先级进行区分.
+    //      因为它们是全局的，所以不需要明确地创建它们.
+    //      相反,你可以用dispatch_get_global_queue函数的获取其中一个队列.
+    //          dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    //          dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //          dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+    //          dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    
+    //----------------------------------------------------------------------------------------------------
+    
+    // 调度组  监听一组异步任务是否执行结束,如果执行结束就能够得到统一的通知.
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group,  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{NSLog(@"下载图片A %@", [NSThread currentThread] );} );
+    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0),  ^{ NSLog(@"下载图片B %@", [NSThread currentThread]); });
+    dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),  ^{ NSLog(@"下载图片C %@", [NSThread currentThread]); });
+    //dispatch_group_notify(group, dispatch_get_main_queue(), ^{ NSLog(@"处理下载完成的图片"); } );
+    // B-->C-->A（B-->A-->C） 打印有可能同一个线程上执行 但都是这个顺序
+    // 单前线程 直接阻塞等待结束。而不是在mainqueue上等通知
+    long result = dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    if (result == 0) // DISPATCH_TIME_NOW  直接进行判断,而不用等待
+    {
+        NSLog(@"处理下载完成的图片");
+    }
+    else
+    {
+        NSLog(@"以上调度组中存在未完成的任务");
+    }
+    
+    //----------------------------------------------------------------------------------------------------
+    
+    dispatch_queue_t queue = dispatch_queue_create("MyConcurrentDiapatchQueue", DISPATCH_QUEUE_CONCURRENT);
+    // 有可能在同一个线程上执行（跟DISPATCH_QUEUE_PRIORITY_BACKGROUND/LOW都有可能同一个线程）
+    
+    __block int a = 2 ;
+    dispatch_async(queue, ^{
+        NSLog(@"第1次读取data值 %i-%@", a, [NSThread currentThread] );
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"第2次读取data值 %i-%@", a,  [NSThread currentThread] ); // 如果后面的不是barrier 那么这里有可能是3
+    });
+    dispatch_barrier_async(queue, ^{
+        // dispatch_barrier_async在并发执行任务的队列中追加处理任务,
+        // 该任务在等待前面并发任务执行完成之后才执行,当dispatch_barrier_async中的任务执行完成,才会继续执行后续的并发执行的任务
+        // 可实现高效率数据库的数据访问和文件访问.
+        a += 1;
+        NSLog(@"第1次写入data值 %i-%@", a,  [NSThread currentThread]);;
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"第3次读取data值 %i-%@", a,  [NSThread currentThread]);
+    });
+    dispatch_async(queue, ^{
+        NSLog(@"第4次读取data值 %i-%@", a,  [NSThread currentThread]);
+    });
+    
+    // dispatch_sync 指定的任务同步地添加到指定的队列中,并会一直等待完成
+    // dispatch_apply 重复任务几次，可以对同一个数组中的每个对象进行并发处理
+    dispatch_queue_t queueDefault = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    NSArray* arr = @[@"10", @"11", @"12"];
+    dispatch_async(queueDefault, ^{
+        // 队列中 可以同样加入队列中,
+        //
+        // 但是main queue要注意，因为main queue的任务只能在主线程执行, 其他queue可以在任意不确定线程执行
+        //
+        dispatch_apply(arr.count, queueDefault, ^(size_t index) {
+            NSLog(@"%zu:%@ in %@", index, arr[index], [NSThread currentThread]);
+        });
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            NSLog(@"用户界面更新");
+        });
+        
+    });
+    
+    //----------------------------------------------------------------------------------------------------
+    
+    dispatch_queue_t one = dispatch_queue_create("SerialQueue1", DISPATCH_QUEUE_SERIAL); // C函数 参数是char* 不是NSString*
+    dispatch_queue_t two = dispatch_queue_create("SerialQueue2", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t three = dispatch_queue_create("SerialQueue3", DISPATCH_QUEUE_SERIAL);
+   
+    //dispatch_async(one 串行队列中 任务再发给同一个串行队列 会导致崩溃 Thread 18: EXC_BREAKPOINT (code=1, subcode=0x102d7634c) ?? 怎么分析原因 ??\
+    // 在调试中发现 串行队列 也可能跟其他队列共享线程,而且可能会在不同线程执行block,但是一定会一个完成之后再执行下一个
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray* a = @[@(1), @(2), @(3)];
+        dispatch_apply(a.count, one, ^(size_t index) {
+            NSLog(@"one-(1) %zu:%@  %@", index, a[index], [NSThread currentThread]); // 线程可能跟并发队列执行job的是同一个
+        });
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray* a = @[@(1), @(2), @(3)];
+        dispatch_apply(a.count, one, ^(size_t index) {
+            NSLog(@"two %zu:%@  %@", index, a[index], [NSThread currentThread]);
+        });
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray* a = @[@(1), @(2), @(3)];
+        dispatch_apply(a.count, one, ^(size_t index) {
+            NSLog(@"three %zu:%@  %@", index, a[index], [NSThread currentThread]);
+        });
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray* a = @[@(1), @(2), @(3)];
+        dispatch_apply(a.count, one, ^(size_t index) { // 同样一个串行queue 可能执行的线程跟第一次不宜昂
+            NSLog(@"one-(2) %zu:%@  %@", index, a[index], [NSThread currentThread]);
+        });
+        
+    });
+    
+    
+    
+    //----------------------------------------------------------------------------------------------------
+   
+    // dispatch_suspend(queue); 挂起队列,表示队列中还未执行的任务会暂停,已经执行的任务会继续执行.
+    // dispatch_resume(queue);  恢复队列,表示队列中还未执行的任务会恢复执行.
+    //
+    
+    // 同步机制
+    // dispatch semaphore是持有计数的信号.计数为0等待,计数为1或大于1,减去1而不等待.
+    // dispatch_semaphore_t semaphore = dispatch_semaphore_create(1); // 1表示计数的初始值
+    //   dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER); 一直等待,直到计数值大于等于1。类似锁的功能
+    //   dispatch_semaphore_signal(semaphore); 将dispatch semaphore的计数加1.
+    
+    // 单例机制
+    //static ViewController *instance;
+    //static dispatch_once_t onceToken;
+    //dispatch_once(&onceToken, ^{
+    //    instance = [[ViewController alloc] init];
+    //});
+    
+}
 
 @end
