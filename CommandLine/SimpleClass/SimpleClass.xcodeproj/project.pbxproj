@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0769CC4266CDE8D00C3FB00 /* CategoryClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */; };
 		B0B606CF2658FB3000CEBA14 /* typeEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B606CE2658FB3000CEBA14 /* typeEncode.m */; };
 		B0DB91B72640277A00EFF18D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91B62640277A00EFF18D /* main.m */; };
 		B0DB91C026402BA600EFF18D /* CRobot.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91BE26402BA600EFF18D /* CRobot.m */; };
@@ -30,6 +31,8 @@
 
 /* Begin PBXFileReference section */
 		B070A6BD26411602009D4227 /* CRobotProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotProtocol.h; sourceTree = "<group>"; };
+		B0769CC2266CDE8D00C3FB00 /* CategoryClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryClass.h; sourceTree = "<group>"; };
+		B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoryClass.m; sourceTree = "<group>"; };
 		B0B606CE2658FB3000CEBA14 /* typeEncode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = typeEncode.m; sourceTree = "<group>"; };
 		B0DB91B32640277A00EFF18D /* SimpleClass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleClass; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0DB91B62640277A00EFF18D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -88,6 +91,8 @@
 				B0FDDA10265113B100E2BD73 /* en.strings */,
 				B0FDDA2126515D7200E2BD73 /* third.m */,
 				B0B606CE2658FB3000CEBA14 /* typeEncode.m */,
+				B0769CC2266CDE8D00C3FB00 /* CategoryClass.h */,
+				B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */,
 			);
 			path = SimpleClass;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 				B0FDDA2226515D7200E2BD73 /* third.m in Sources */,
 				B0DB91C42640E79300EFF18D /* CRobotSoldier.m in Sources */,
 				B0B606CF2658FB3000CEBA14 /* typeEncode.m in Sources */,
+				B0769CC4266CDE8D00C3FB00 /* CategoryClass.m in Sources */,
 				B0DB91B72640277A00EFF18D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
