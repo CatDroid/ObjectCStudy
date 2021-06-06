@@ -83,6 +83,9 @@ int main(int argc, const char * argv[]) {
         extern void typeEncode();
         typeEncode();
         
+        extern void forth();
+        forth();
+        
     }
     return 0;
 }
