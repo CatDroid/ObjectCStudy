@@ -28,6 +28,8 @@
     return self;
 }
 
+// CoreImage封装了底层图形处理的实现细节，你不必关心OpenGL和OpenGL ES是如何利用GPU的，也不必知晓"GCD是如何利用多核进行处理"的
+// 它的处理数据基于CoreGraphics，CoreVideo，和Image I/O框架
 
 -(CIImage*) outputImage // 这个重写了父类属性 outputImage 的get方法
 {
@@ -55,6 +57,7 @@
         
     // CIImage是CoreImage框架中最基本代表图像的对象，他不仅包含元图像数据，还包含作用在原图像上的滤镜链。
     // 在CIImage被CIContext渲染出来之前，他是依赖于滤镜链的，滤镜是不会更改CIImage中的图像数据。
+    // 一个不可变对象
     //
     // Quick Look 可以直接看到CIImage整个滤镜链/卷积核参数
     //
@@ -89,6 +92,11 @@
     
     NSURL* url = [[NSBundle mainBundle] URLForResource:@"Spaceship" withExtension:@"png"];
     inputImage = [CIImage imageWithContentsOfURL:url];
+    // 其中contextWithOptions创建GPU方式的上下文没有实时性，
+    
+    // !!! 虽然渲染是在GPU上执行，但是其输出的image是不能显示的
+    // 只有当其被复制回CPU存储器上时，才会被转成一个可被显示的image类型，比如UIImage !!!
+     
     
     //---------------------------------------------------------------------------------------------------------------------
     
@@ -274,9 +282,13 @@
     return glowImage;
     
     /*
-     CIDetector用来分析CIImage，得到CIFeature。
+     CIDetector用来分析CIImage，得到CIFeature
+     
+     CIDetecror是Core Image框架中提供的一个识别类,包括对人脸、形状、条码、文本的识别
+     人脸识别功能不单单可以对人脸进行获取,还可以获取眼睛和嘴等面部特征信息
+     
      每个CIDetector都要用一个探测器来初始化，这个类型高数探测器要在图像中寻找什么特征。
-     当一个CIDetector分析一张图片时，返回一个探测到的CIFeature的数组，
+     当一个CIDetector分析一张图片时，返回一个探测到的CIFeature的数组
      
      如果CIDetector 被初始化为寻找面孔，那么返回的数组会被填上CIFaceFeature对象，
      每个CIFaceFeature都包含一个面部的CGrect引用(按照图像的坐标系)，以及检测到的面孔的左眼，右眼，嘴部位置的CGPoint;
@@ -290,6 +302,41 @@
      }
      
      CoreImage坐标系左下角为原点，UI坐标系左上角为圆点
+     
+     
+     CoreImage的自动增强特征分析了图像的直方图，人脸区域内容和元数据属性。
+     接下来它将返回一个CIFilter对象的数组，每个CIFilter的输入参数已经被设置好
+     
+     一些在CoreImage中用作自动图像增强的滤镜。这些滤镜将会解决在照片中被发现的那些常见问题
+     CIRedEyeCorrection         修复由相机闪光造成的红眼白眼
+     CIFaceBlance               调整面部颜色 使其肤色看起来比较舒服
+     CIVibrance                 调整饱和度 不改变肤色
+     CIToneCurve                调整对比度
+     CIHighlightShaowdAdjust    调整阴影细节
+     
+     -(UIImage *)autoAdjust:(CIImage *)image{
+     
+        // [image properties] 输入的是CIImage
+     
+        id orientationProperty = [[image properties] valueForKey:(__bridge id)kCGImagePropertyOrientation];
+     
+        NSDictionary *options = nil;
+        if (orientationProperty)
+        {
+     
+           options = @{CIDetectorImageOrientation : orientationProperty}; // 字典的初始化方式
+     
+            //用于设置识别方向，值是一个从1 ~ 8的整型的NSNumber。如果值存在，检测将会基于这个方向进行，但返回的特征仍然是基于这些图像的。
+        }
+     
+        NSArray *adjustments = [image autoAdjustmentFiltersWithOptions:options];
+        for (CIFilter *filter in adjustments) {
+            [filter setValue:image forKey:kCIInputImageKey];
+            image = filter.outputImage;
+        }
+     
+        ... 创建context 得到CGImage 转成UIImage
+     
      */
 }
 
