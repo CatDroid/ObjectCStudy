@@ -6,6 +6,7 @@
 //
 
 #import "ViewController.h"
+#import "FilterViewController.h"
 
 
 // @interface ViewController : UIViewController 这个是继承
@@ -78,6 +79,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // storyboard 设置 main entry
+    // 在Main.storyboard中 找到一个 单向的箭头 拖到到其他View上 即可
+    
+    // storyboard 增加 Navigation Bar
+    // 在Main.storyboard中 点击最右上角的 +  搜索Navigation Controller 创建, 然后可删除默认创建的ViewContorl
+    
+    // 父子关系
+    // 通过Ctrl+拖拽 建立Navigation Controller与ViewContorl的父子关系
+    
  
     _dataSource = @[
         @"Filter的使用",
@@ -94,6 +105,55 @@
     [self.view addSubview:_tableview]; // 增加子View控件
 }
 
+//-----------------------------------------------------------------------------------------------
+// UITableViewDelegate 协议
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    /*
+     
+     切换ViewController
+     
+     [self.navigationController pushViewController:(nonnull UIViewController *) animated:(BOOL)]; // 调用pushViewController
+     [self presentViewController:(nonnull UIViewController *) animated:(BOOL) completion:^(void)completion]; // 调用presentViewController
+     
+     
+     pushViewController
+     1. 是作用于navigationController的  必须保证当前页面有导航栏 navigationController
+     2. 把一个视图压入栈，然后显示出来，这样可以方便查找之前的视图，能够直接退回到之前的任意一个视图。
+     
+     presentViewController
+     1. 作用在viewConroller上, 在当前页面没有导航栏的时候 也可以使用。
+     2. 直接显示一个视图，这样每次就只能退回到前面的那一个视图。
+     3. 在一直使用pushViewController的导航之间，一旦使用了presentViewController，当前界面的导航栏navigationController就会变成空的，那么pushViewController也就没办法使用了。
+        这时，如果想要再次使用pushViewController，就必须重新设置导航栏 navigationController
+        不过，这样的话，当前视图就会变成根视图（rootViewController），而之前导航链里面的视图也找不到了。
+     
+     pushViewController 和presentViewController退回到之前视图的方法：
+     [self.navigationController popToViewController:(nonnull UIViewController *) animated:(BOOL)];//pushViewController 退回
+     [self dismissViewControllerAnimated:(BOOL) completion:^(void)completion]；// presentViewController退回
+     
+     */
+    switch(indexPath.row)
+    {
+        case 0:
+            {
+                UIViewController* ctl = [FilterViewController new];
+                [self.navigationController pushViewController:ctl animated:TRUE];
+            }
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            NSLog(@"unknown selection %li", indexPath.row);
+            break;
+    }
+}
+
+//-----------------------------------------------------------------------------------------------
 // UITableViewDataSource 只有两个方法 是 必须要的
 // Only two methods of this protocol are required, and they are shown in the following example code.
 
@@ -160,22 +220,6 @@
 }
 */
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    switch(indexPath.row)
-    {
-        case 0:
-            break;
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        default:
-            NSLog(@"unknown selection %li", indexPath.row);
-            break;
-    }
-}
+
 
 @end

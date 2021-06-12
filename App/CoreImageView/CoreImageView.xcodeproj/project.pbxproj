@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06A7819266DA1D100AD1B30 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06A7818266DA1D100AD1B30 /* FilterViewController.m */; };
 		B0769CA9266CDAA900C3FB00 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CA8266CDAA900C3FB00 /* AppDelegate.m */; };
 		B0769CAC266CDAA900C3FB00 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CAB266CDAA900C3FB00 /* SceneDelegate.m */; };
 		B0769CAF266CDAA900C3FB00 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CAE266CDAA900C3FB00 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B06A7817266DA1D100AD1B30 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		B06A7818266DA1D100AD1B30 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B0769CA4266CDAA900C3FB00 /* CoreImageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreImageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0769CA7266CDAA900C3FB00 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0769CA8266CDAA900C3FB00 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -42,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B06A7816266D9C0F00AD1B30 /* FilterUsage */ = {
+			isa = PBXGroup;
+			children = (
+				B06A7817266DA1D100AD1B30 /* FilterViewController.h */,
+				B06A7818266DA1D100AD1B30 /* FilterViewController.m */,
+			);
+			path = FilterUsage;
+			sourceTree = "<group>";
+		};
 		B0769C9B266CDAA900C3FB00 = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +73,7 @@
 		B0769CA6266CDAA900C3FB00 /* CoreImageView */ = {
 			isa = PBXGroup;
 			children = (
+				B06A7816266D9C0F00AD1B30 /* FilterUsage */,
 				B0769CA7266CDAA900C3FB00 /* AppDelegate.h */,
 				B0769CA8266CDAA900C3FB00 /* AppDelegate.m */,
 				B0769CAA266CDAA900C3FB00 /* SceneDelegate.h */,
@@ -147,6 +160,7 @@
 			files = (
 				B0769CAF266CDAA900C3FB00 /* ViewController.m in Sources */,
 				B0769CA9266CDAA900C3FB00 /* AppDelegate.m in Sources */,
+				B06A7819266DA1D100AD1B30 /* FilterViewController.m in Sources */,
 				B0769CBA266CDAAA00C3FB00 /* main.m in Sources */,
 				B0769CAC266CDAA900C3FB00 /* SceneDelegate.m in Sources */,
 			);
