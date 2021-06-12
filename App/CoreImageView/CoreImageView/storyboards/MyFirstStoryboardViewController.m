@@ -1,25 +1,21 @@
 //
-//  FilterViewController.m
+//  MyFirstStoryboardViewController.m
 //  CoreImageView
 //
-//  Created by hehanlong on 2021/6/7.
+//  Created by hehanlong on 2021/6/12.
 //
 
-#import "FilterViewController.h"
+#import "MyFirstStoryboardViewController.h"
 
-@interface FilterViewController ()
+@interface MyFirstStoryboardViewController ()
 
 @end
 
-@implementation FilterViewController
+@implementation MyFirstStoryboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
-    
-    NSLog(@"FilterView viewDidLoad ");
-    
+    // Do any additional setup after loading the view.
 }
 
 /*

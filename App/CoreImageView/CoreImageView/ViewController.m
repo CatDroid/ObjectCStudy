@@ -8,6 +8,10 @@
 #import "ViewController.h"
 #import "FilterViewController.h"
 
+// StoryBoard XIB等方式创建ViewController
+#import "MyFirstStoryboardViewController.h"
+#import "XIBViewController.h"
+#import "MyTableViewController.h"
 
 // @interface ViewController : UIViewController 这个是继承
 // @interface ViewController() 这个是匿名类别/类扩展
@@ -80,8 +84,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // storyboard 设置 main entry
+    // 修改APP默认的storyboard, Targets--App--General--DeploymentInfo--Main interface(主交互界面)--切换storyboard
+    
+    // storyboard 设置 main entry （程序启动需要一个 "根视图控制器"）(Main.storyboard的根视图控制器)
     // 在Main.storyboard中 找到一个 单向的箭头 拖到到其他View上 即可
+    // (或者) 先选中viewcontroller，然后勾选Is Initial View Controller，然后这个控制器的左侧就会出现一个箭头指向这个视图控制器
     
     // storyboard 增加 Navigation Bar
     // 在Main.storyboard中 点击最右上角的 +  搜索Navigation Controller 创建, 然后可删除默认创建的ViewContorl
@@ -90,11 +97,19 @@
     // 通过Ctrl+拖拽 建立Navigation Controller与ViewContorl的父子关系
     
  
+    // 新建storyboard--默认是空白的--右上角+---搜索ViewContorller--添加之后会多了View Contorller Scene
+    // -- 勾选 is initial view contoller (设置为这个storyboard的main entry)
+    // 创建一个ViewContorller类（集成UIViewController） 并把新建的storyboard的class设置为这个ViewController
+    
+ 
     _dataSource = @[
         @"Filter的使用",
         @"采用GPU方式实时绘制",
         @"转场效果",
-        @"人脸识别"
+        @"人脸识别",
+        @"切换storyboard方式创建的ViewControler",
+        @"切换xib方式创建的ViewControler",
+        @"切换xib方式创建的TableViewControler"
     ];
     
     // self.view.frame 和 self.view.bounds 区别 ??  创建TableView 指定大小 还有样式
@@ -147,6 +162,59 @@
             break;
         case 3:
             break;
+        case 4:
+        {
+            // ------------------------------------------------------------------------------------------------
+            // ViewController对象的创建方式
+            // 可视化编程的类的创建坚持一个原则就不会有问题.就是
+            // 1. 如果是XIB就用XIB的方式创建，
+            // 2. 如果是Storyboard就用Storyboard的方式创建，不要用 [[类名 alloc] init]
+            // 3. 如果是纯代码编程就用[[类名 alloc] init]
+           
+            // ------------------------------------------------------------------------------------------------
+            // 下面使用方式2 StoryBoard的方式创建ViewController对象
+            
+            // 在storyboard中指定根视图控制器的创建方式
+            //通过加载storyboard创建ViewController
+            //仅仅是加载了名为Storyboard的storyboard，并不会创建Storyboard中的控制器以及控件
+            UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"MyFirstStoryboard" bundle:nil];
+            MyFirstStoryboardViewController *testVC = [myStoryBoard instantiateInitialViewController];
+            [self.navigationController pushViewController:testVC animated:YES];
+            
+            // 在storyboard中不是根视图控制器的创建方式（非entry point）  需要在可视化文件中设置对应的viewcontroller Identifier 为  viewC
+            // UIStoryboard *myStoryBoard = UIStoryboard storyboardWithName:@"MyFirstStroyboard" bundle:nil];
+            // TestViewController* viewC = [myStoryBoard instantiateViewControllerWithIdentifier:@“viewC"];
+            
+        } break;
+        case 5:
+        {
+            // ------------------------------------------------------------------------------------------------
+            // 下面使用方式1 XIB的方式创建ViewController对象
+            
+            // 这里的NibName是XIB的文件名字
+            XIBViewController *testVC = [[XIBViewController alloc] initWithNibName:@"XIBViewController" bundle:nil];
+            [self.navigationController pushViewController:testVC animated:YES];
+            
+        } break;
+            
+        case 6:
+        {
+            // 创建cocoa class 选择基类为TableViewController 并且勾选上also create xib
+            // 这样创建的xib文件 就有了TableView 并且
+            // 1. TableView的outlet delegate和datasource都指向了 file owner
+            // 2. TableView的reference outlet显示被 file's owner.view 这个outlet引用了(也就是被viewcontorller.view引用了)
+            // 3. file's owner custom class 指向自定义的viewcontrloer
+            
+            
+            // Outlets 和 Reference Outlets  区别
+            // Outlets  本身拥有的outlet   里面显示的是你的属性, 以及连接着的目标.
+            // Reference Outlets 被哪些outlet引用了自己 当前View被连接到了别人的属性上面.
+            MyTableViewController* tblVC = [[MyTableViewController alloc] initWithNibName:@"MyTableViewController" bundle:nil];
+            [self.navigationController pushViewController:tblVC animated:YES];
+            
+            
+        } break;
+           
         default:
             NSLog(@"unknown selection %li", indexPath.row);
             break;

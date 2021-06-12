@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B034205C2674F34D00D34E53 /* MyFirstStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034205B2674F34D00D34E53 /* MyFirstStoryboard.storyboard */; };
+		B03420602674FC6D00D34E53 /* MyFirstStoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034205F2674FC6D00D34E53 /* MyFirstStoryboardViewController.m */; };
+		B03420652675030800D34E53 /* XIBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03420632675030800D34E53 /* XIBViewController.m */; };
+		B03420662675030800D34E53 /* XIBViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B03420642675030800D34E53 /* XIBViewController.xib */; };
+		B034206B2675110E00D34E53 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03420692675110E00D34E53 /* MyTableViewController.m */; };
+		B034206C2675110E00D34E53 /* MyTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034206A2675110E00D34E53 /* MyTableViewController.xib */; };
 		B06A7819266DA1D100AD1B30 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06A7818266DA1D100AD1B30 /* FilterViewController.m */; };
 		B0769CA9266CDAA900C3FB00 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CA8266CDAA900C3FB00 /* AppDelegate.m */; };
 		B0769CAC266CDAA900C3FB00 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CAB266CDAA900C3FB00 /* SceneDelegate.m */; };
@@ -18,6 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B034205B2674F34D00D34E53 /* MyFirstStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyFirstStoryboard.storyboard; sourceTree = "<group>"; };
+		B034205E2674FC6D00D34E53 /* MyFirstStoryboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyFirstStoryboardViewController.h; sourceTree = "<group>"; };
+		B034205F2674FC6D00D34E53 /* MyFirstStoryboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFirstStoryboardViewController.m; sourceTree = "<group>"; };
+		B03420622675030800D34E53 /* XIBViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XIBViewController.h; sourceTree = "<group>"; };
+		B03420632675030800D34E53 /* XIBViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XIBViewController.m; sourceTree = "<group>"; };
+		B03420642675030800D34E53 /* XIBViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XIBViewController.xib; sourceTree = "<group>"; };
+		B03420682675110E00D34E53 /* MyTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTableViewController.h; sourceTree = "<group>"; };
+		B03420692675110E00D34E53 /* MyTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
+		B034206A2675110E00D34E53 /* MyTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTableViewController.xib; sourceTree = "<group>"; };
 		B06A7817266DA1D100AD1B30 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		B06A7818266DA1D100AD1B30 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B0769CA4266CDAA900C3FB00 /* CoreImageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreImageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +60,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B034205A2674F30600D34E53 /* storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B034205B2674F34D00D34E53 /* MyFirstStoryboard.storyboard */,
+				B034205E2674FC6D00D34E53 /* MyFirstStoryboardViewController.h */,
+				B034205F2674FC6D00D34E53 /* MyFirstStoryboardViewController.m */,
+				B03420622675030800D34E53 /* XIBViewController.h */,
+				B03420632675030800D34E53 /* XIBViewController.m */,
+				B03420642675030800D34E53 /* XIBViewController.xib */,
+				B03420682675110E00D34E53 /* MyTableViewController.h */,
+				B03420692675110E00D34E53 /* MyTableViewController.m */,
+				B034206A2675110E00D34E53 /* MyTableViewController.xib */,
+			);
+			path = storyboards;
+			sourceTree = "<group>";
+		};
 		B06A7816266D9C0F00AD1B30 /* FilterUsage */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +104,7 @@
 		B0769CA6266CDAA900C3FB00 /* CoreImageView */ = {
 			isa = PBXGroup;
 			children = (
+				B034205A2674F30600D34E53 /* storyboards */,
 				B06A7816266D9C0F00AD1B30 /* FilterUsage */,
 				B0769CA7266CDAA900C3FB00 /* AppDelegate.h */,
 				B0769CA8266CDAA900C3FB00 /* AppDelegate.m */,
@@ -145,8 +177,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03420662675030800D34E53 /* XIBViewController.xib in Resources */,
+				B034206C2675110E00D34E53 /* MyTableViewController.xib in Resources */,
 				B0769CB7266CDAAA00C3FB00 /* LaunchScreen.storyboard in Resources */,
 				B0769CB4266CDAAA00C3FB00 /* Assets.xcassets in Resources */,
+				B034205C2674F34D00D34E53 /* MyFirstStoryboard.storyboard in Resources */,
 				B0769CB2266CDAAA00C3FB00 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,11 +193,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03420602674FC6D00D34E53 /* MyFirstStoryboardViewController.m in Sources */,
 				B0769CAF266CDAA900C3FB00 /* ViewController.m in Sources */,
 				B0769CA9266CDAA900C3FB00 /* AppDelegate.m in Sources */,
+				B03420652675030800D34E53 /* XIBViewController.m in Sources */,
 				B06A7819266DA1D100AD1B30 /* FilterViewController.m in Sources */,
 				B0769CBA266CDAAA00C3FB00 /* main.m in Sources */,
 				B0769CAC266CDAA900C3FB00 /* SceneDelegate.m in Sources */,
+				B034206B2675110E00D34E53 /* MyTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
