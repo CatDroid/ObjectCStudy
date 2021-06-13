@@ -1,20 +1,22 @@
 //
-//  MyTableViewController.m
+//  ArgumentsViewController.m
 //  CoreImageView
 //
-//  Created by hehanlong on 2021/6/12.
+//  Created by hehanlong on 2021/6/13.
 //
 
-#import "MyTableViewController.h"
+#import "ArgumentsViewController.h"
 
-@interface MyTableViewController ()
+@interface ArgumentsViewController ()
 
 @end
 
-@implementation MyTableViewController
+@implementation ArgumentsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"通过segue传递的参数 tableDataSource %@", _tableDataSource);
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -26,24 +28,26 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    
+    // 通过ViewController传递的参数 来作为显示tableview的数据
+    return _tableDataSource == NULL ? 0 : 1 ;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+ 
+    return _tableDataSource == NULL ? 0 : _tableDataSource.count ;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    cell.textLabel.text = _tableDataSource[indexPath.row];
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -79,32 +83,21 @@
 }
 */
 
-/*
 #pragma mark - Table view delegate
-
-// 在基于 xib-based 的应用
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    long row = indexPath.row;
+    NSLog(@"ArgumentsViewController table cell seleted : %@", _tableDataSource[row]);
     
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
 }
-*/
 
-/*
 #pragma mark - Navigation
 
- // 在基于 storyboard的应用
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end
