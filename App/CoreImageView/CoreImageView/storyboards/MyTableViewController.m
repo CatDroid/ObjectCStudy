@@ -107,8 +107,8 @@
     {
         case 0:
         {
-            ViewController* vc= self.navigationController.viewControllers[ self.navigationController.viewControllers.count - 1];
-            // 可以在这里设置返回参数 
+            UIViewController* vc= self.navigationController.viewControllers[ self.navigationController.viewControllers.count - 2];
+            // 可以在这里设置返回参数
             [self.navigationController popToViewController:vc animated:NO];
             
             // 或者直接
