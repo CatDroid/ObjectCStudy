@@ -10,6 +10,13 @@
 
 @interface MyFirstStoryboardViewController ()
 
+// 如果通过控件--右键菜单--Sent Events--TouchDown--+号拖到这里，会生成函数，并且这个控件的Send Events会绑定这个方法
+- (IBAction)Button1TouchDown:(UIButton *)sender;
+
+// 如果通过控制--Ctrl+拖拽 到这里, 控件会增加一个reference outlet
+@property (weak, nonatomic) IBOutlet UIButton *ButtonWithOutlet;
+
+
 @end
 
 @implementation MyFirstStoryboardViewController
@@ -17,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [_ButtonWithOutlet addTarget:self action:@selector(doSomething:forEvent:) forControlEvents:UIControlEventTouchDown];
 }
 
 /*
@@ -58,5 +67,21 @@
     
     
 }
+
+- (IBAction)Button1TouchDown:(UIButton *)sender
+{
+    static int pressCounter = 0;
+    pressCounter ++ ;
+    sender.titleLabel.text = [NSString stringWithFormat:@"Sender方式关联 已按下 %d", pressCounter];
+}
+
+
+- (IBAction)doSomething:(UIButton*)sender forEvent:(UIEvent*)event
+{
+    static int pressCounter = 0;
+    pressCounter ++ ;
+    sender.titleLabel.text = [NSString stringWithFormat:@"Outlet方式关联 已按下 %d", pressCounter];
+}
+
 
 @end
