@@ -120,8 +120,10 @@
     [self.view addSubview:_tableview]; // 增加子View控件
 }
 
+#pragma mark - Table view delegate
 //-----------------------------------------------------------------------------------------------
 // UITableViewDelegate 协议
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     /*
@@ -273,6 +275,7 @@
     }
 }
 
+#pragma mark - Table view data source
 //-----------------------------------------------------------------------------------------------
 // UITableViewDataSource 只有两个方法 是 必须要的
 // Only two methods of this protocol are required, and they are shown in the following example code.
