@@ -13,16 +13,21 @@
 
 @implementation ArgumentsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad { // 这里先执行，然后才是tableview的创建 
     [super viewDidLoad];
+    
+    // 由于ArgumentViewController 是 UITableViewContorller
+    // 所以 如果storyboard下 对应这个ViewContorller的View 只是个UIView 就会崩溃
+    // from storyboard "MyFirstStoryboard", but didn't get a UITableView.'
+    
+    // 所以要删除原来 storyboard 对应 viewcontroller scene下的view
+    // 创建table view 并且和视图控制器的view outlet的关联（右键视图控制器 可以看到当前控制器所有outlet的关联）
     
     NSLog(@"通过segue传递的参数 tableDataSource %@", _tableDataSource);
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // tableViewCell使用重用机制 需要先注册id对应class
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"mycell"];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 #pragma mark - Table view data source
@@ -41,7 +46,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    // _dequeueReusableCellWithIdentifier:forIndexPath:usingPresentationValues:], UITableView.m:9037
+    // 'NSInternalInconsistencyException', reason: 'unable to dequeue a cell with identifier cell
+    // - must register a nib or a class for the identifier or connect a prototype cell in a storyboard'
+    // 需要在 viewDidLoad 中 为一个id 注册对应的类(UITableViewCell或其派生类)
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mycell" forIndexPath:indexPath];
     
     cell.textLabel.text = _tableDataSource[indexPath.row];
     

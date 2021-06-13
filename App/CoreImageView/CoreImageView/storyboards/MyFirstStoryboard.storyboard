@@ -42,12 +42,11 @@
         <scene sceneID="NaD-Ze-cZV">
             <objects>
                 <viewController title="ArgumentsViewController" id="gdT-Ux-wLi" customClass="ArgumentsViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lK0-sa-7o8">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fu8-M6-J95">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="EHs-Yu-nJN"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
+                    </tableView>
                     <navigationItem key="navigationItem" id="d9C-1F-suv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fo1-nl-0VL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
