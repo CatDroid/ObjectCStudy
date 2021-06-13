@@ -100,7 +100,9 @@
     // 父子关系
     // 通过Ctrl+拖拽 建立Navigation Controller与ViewContorl的父子关系
     
- 
+    // 一个故事板storyboard中, 可以包括很多的控制器对象ViewContorl
+    // xib是storyboard的前身，都是对界面布局的描述文件
+    //
     // 新建storyboard--默认是空白的--右上角+---搜索ViewContorller--添加之后会多了View Contorller Scene
     // -- 勾选 is initial view contoller (设置为这个storyboard的main entry)
     // 创建一个ViewContorller类（集成UIViewController） 并把新建的storyboard的class设置为这个ViewController
