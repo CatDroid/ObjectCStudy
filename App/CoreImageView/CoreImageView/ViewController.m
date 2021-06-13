@@ -81,8 +81,12 @@
     // 这里不能声明属性
 }
 
+#pragma mark View life time
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"ViewContoller viewDidLoad");
     
     // 修改APP默认的storyboard, Targets--App--General--DeploymentInfo--Main interface(主交互界面)--切换storyboard
     
@@ -118,6 +122,72 @@
     _tableview.dataSource = self;   // 需要实现 <UITableViewDataSource> 协议
     _tableview.tableFooterView = [UIView new];
     [self.view addSubview:_tableview]; // 增加子View控件
+}
+
+// 重新显示
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"ViewContoller viewDidAppear");
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"ViewContoller viewWillAppear");
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSLog(@"ViewContoller viewWillDisappear");
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    // 首次出现
+    // viewDidLoad
+    // viewWillAppear
+    // viewDidAppear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 跳转（如果后面的页面再跳转 就没有打印了）
+    // 新的界面 viewDidLoad
+    // viewWillDisappear
+    // viewDidDisappear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 再返回到这个页面
+    // 之前的界面 viewWillDisappear
+    // viewWillAppear
+    // 之前的界面 viewDidDisappear
+    // viewDidAppear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 手势滑动但又放弃
+    // viewWillAppear
+    // viewWillDisappear --> 这个跟直接跳转界面流程一样
+    // viewDidDisappear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00
+    
+
+    [super viewDidDisappear:animated];
+    NSLog(@"ViewContoller viewDidDisappear");
+}
+
+-(void) willMoveToParentViewController:(UIViewController *)parent
+{
+    NSLog(@"ViewContoller willMoveToParentViewController parent = %@", parent);
+}
+
+-(void) didMoveToParentViewController:(UIViewController *)parent
+{
+    NSLog(@"ViewContoller didMoveToParentViewController parent = %@", parent);
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"ViewContoller prepareForSegue segue = %@ sender = %@", segue, sender);
 }
 
 #pragma mark - Table view delegate
