@@ -98,6 +98,14 @@
     long row = indexPath.row;
     NSLog(@"ArgumentsViewController table cell seleted : %@", _tableDataSource[row]);
     
+    // 需要先在StoryBoard上TableView建立两个TableViewCell然后Ctrl+拖拽建立多个segue到不同的ControlView，并设置每个”segue接入“的id
+    if (row < 3) {
+        [self performSegueWithIdentifier:@"MySegueOrange" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"MySegueGreen" sender:nil];
+    }
+    
+    
 }
 
 #pragma mark - Navigation
@@ -106,6 +114,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"MySegueGreen"])
+    {
+        NSLog(@"跳转到Green这个segue");
+    }
+    else
+    {
+        NSLog(@"跳转到Orange这个segue");
+    }
 }
 
 
