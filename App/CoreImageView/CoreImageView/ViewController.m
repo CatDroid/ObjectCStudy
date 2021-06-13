@@ -191,6 +191,25 @@
         case 5:
         {
             // ------------------------------------------------------------------------------------------------
+            __weak typeof(self) weakSelf = self ;
+            
+            // __weak  声明了一个可以自动nil化的弱引用 只能在ARC模式下使用,也只能修饰对象（NSString,不能修饰基本数据类型（int）;__weak不可以在block中被重新赋值
+            // __strong 默认的引用
+            // __block 可以在block中被重新赋值; 不管是ARC还是MRC模式下都可以使用，可以修饰对象，还可以修饰基本数据类型; __block对象在ARC下可能会导致循环引用,所以ARC下引入了__weak
+            
+            // strong，weak 用来修饰属性
+            // __weak, __strong 用来修饰变量
+            
+            //------------------------------------------------------------------------------------------------------------
+            // __weak
+            //
+            // 有些情况，block 会强引用和持有self，而self恰好也强引用和持有了block(self.myblock=^{})，就造成了传说中的循环引用
+            // weakSelf是为了block不持有self，避免循环引用，
+            // 而再声明一个strongSelf是因为一旦进入block执行，就不允许self在这个执行过程中释放。
+            // block执行完后这个strongSelf会自动释放，没有循环引用问题。
+            
+            
+            // ------------------------------------------------------------------------------------------------
             // 下面使用方式1 XIB的方式创建ViewController对象
             
             // 创建ViewController类的时候 可以勾选 also create xib file
@@ -214,16 +233,33 @@
             // 返回值   控制器之间的逆向传值, 通过block方式或者协议
             testVC.feedback = ^ BOOL (int paramters, NSString* hints) {
                 
-                NSMutableArray* newDataSource = [NSMutableArray arrayWithCapacity:self->_dataSource.count];
+               
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf == nil) {
+                    // 弱引用不会影响对象的释放，但是当对象被释放时，所有指向它的弱引用都会自定被置为 nil，这样可以防止野指针
+                    
+                    NSLog(@"back to View Controller was deleted ");
+                    return false ;
+                }
+                
+                NSMutableArray* newDataSource = [NSMutableArray arrayWithCapacity:strongSelf->_dataSource.count];
+                
+                //------------------------------------------------------------------------------------------------------------
+                // __block
+                //
+                // 在一个 block里头如果使用了在 block之外的变数，会将这份变数 "先复制一份再使用"，
+                // 也就是，在没有特别宣告下，
+                // 对于目前的block 来说，所有的外部的变数都是只可读的，不可改的。
                 
                 // Block捕获的自动变量添加 __block 说明符，就可在Block内读和写该变量，也可以在原来的栈上读写该变量。
                 // __block 发挥作用的原理：将栈上用 __block 修饰的自动变量封装成一个结构体，让其在堆上创建，以方便从栈上或堆上访问和修改同一份数据。
+                
                 
                 __block NSUInteger refreshIdx = -1 ;  // 需要增加 __block
                 
                 // Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
                 // [_dataSource enumerateObjectsUsingBlock:
-                [self->_dataSource enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [strongSelf->_dataSource enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if ([obj containsString:@"控制器传参数"])
                     {
                         NSString* ns = [NSString stringWithFormat:@"(控制器传参数)控制器返回值:%i,%@", paramters,hints];
@@ -237,12 +273,12 @@
                     
                 }];
                 //   NSMutableArray 是 NSArray 的子类 所以不用转换
-                self->_dataSource = newDataSource ;
+                strongSelf->_dataSource = newDataSource ;
                 
                 
                 // TableView 刷新局部的cell  如果NSINdexPath不存在 会出现 _UIAssertValidUpdateIndexPath
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:refreshIdx inSection:0];
-                [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
+                [strongSelf.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
                 
                 return true ;
             };
