@@ -8,6 +8,7 @@
 #import "XIBViewController.h"
 
 @interface XIBViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *LabelView;
 
 @end
 
@@ -17,20 +18,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    // 创建ViewController类的时候 可以勾选 also create xib file
-    // 1. 这样会创建xib文件(view)
-    // 2. 并且xib文件的File's Owner custom class设置为新建的VIewController
-    
-    // 在xib文件中，
-    // File’s Owner就是控制器 可以设置Custom Class为自己创建的ViewControl类
-    // View就是视图 也就是 Viewcontroller中的self.view（这个需要关联）这个View也可以设置自己的Custom Class(继承View或者UITableViewCell)
-    
-    // View和File's Owner(ViewContorller) 关联
-    // 1. 从File’s Owner按住control往View身上拽
-    // 2. 弹出菜单Outlets中选择view
-    // 3. 这样，viewcontroller中的view就是我们可视化xib文件中的View了
+    // 在成员函数中 访问属性 两种方式
+    // 1. _LabelView 相当于 self->_LabelView
+    // 2. self.LabelView (实际是调用了getter)
+    self.LabelView.text = [NSString stringWithFormat:@"控制器传入参数 = %i", self.paramtersFromLastViewController];
+    self.LabelView.textColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
     
 
+}
+
+
+-(int) paramtersFromLastViewController
+{
+    return self->paramtersFromLastViewController;
+}
+
+-(void) setParamtersFromLastViewController:(int)paramId;
+{
+    self->paramtersFromLastViewController = paramId;
 }
 
 /*

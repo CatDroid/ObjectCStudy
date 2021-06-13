@@ -108,7 +108,7 @@
         @"转场效果",
         @"人脸识别",
         @"切换storyboard方式创建的ViewControler",
-        @"切换xib方式创建的ViewControler",
+        @"切换xib方式创建的ViewControler(控制器传参数)",
         @"切换xib方式创建的TableViewControler"
     ];
     
@@ -191,8 +191,24 @@
             // ------------------------------------------------------------------------------------------------
             // 下面使用方式1 XIB的方式创建ViewController对象
             
-            // 这里的NibName是XIB的文件名字
+            // 创建ViewController类的时候 可以勾选 also create xib file
+            // 1. 这样会创建xib文件(view)
+            // 2. 并且xib文件的File's Owner custom class设置为新建的VIewController
+            
+            // 在xib文件中，
+            // File’s Owner就是控制器 可以设置Custom Class为自己创建的ViewControl类
+            // View就是视图 也就是 Viewcontroller中的self.view（这个需要关联）这个View也可以设置自己的Custom Class(继承View或者UITableViewCell)
+            
+            // View和File's Owner(ViewContorller) 关联
+            // 1. 从File’s Owner按住control往View身上拽
+            // 2. 弹出菜单Outlets中选择view
+            // 3. 这样，viewcontroller中的view就是我们可视化xib文件中的View了
+            
+            
             XIBViewController *testVC = [[XIBViewController alloc] initWithNibName:@"XIBViewController" bundle:nil];
+            // 这里的NibName是XIB的文件名字
+            // 通过代码来创建的ViewController对象，可以直接在这里给下一个控制器传入参数
+            testVC.paramtersFromLastViewController = 2021 ;
             [self.navigationController pushViewController:testVC animated:YES];
             
         } break;

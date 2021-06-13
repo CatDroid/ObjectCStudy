@@ -10,6 +10,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XIBViewController : UIViewController
+{
+@public
+    int paramtersFromLastViewController;
+}
+
+-(int) paramtersFromLastViewController;
+-(void) setParamtersFromLastViewController:(int)paramId;
 
 @end
 
