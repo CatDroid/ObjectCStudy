@@ -81,8 +81,12 @@
     // 这里不能声明属性
 }
 
+#pragma mark View life time
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"ViewContoller viewDidLoad");
     
     // 修改APP默认的storyboard, Targets--App--General--DeploymentInfo--Main interface(主交互界面)--切换storyboard
     
@@ -107,8 +111,8 @@
         @"采用GPU方式实时绘制",
         @"转场效果",
         @"人脸识别",
-        @"切换storyboard方式创建的ViewControler",
-        @"切换xib方式创建的ViewControler",
+        @"切换storyboard方式创建的ViewControler(VC)",
+        @"切换xib方式创建的VC(控制器传参数/返回值)",
         @"切换xib方式创建的TableViewControler"
     ];
     
@@ -120,8 +124,76 @@
     [self.view addSubview:_tableview]; // 增加子View控件
 }
 
+// 重新显示
+-(void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"ViewContoller viewDidAppear");
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"ViewContoller viewWillAppear");
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSLog(@"ViewContoller viewWillDisappear");
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    // 首次出现
+    // viewDidLoad
+    // viewWillAppear
+    // viewDidAppear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 跳转（如果后面的页面再跳转 就没有打印了）
+    // 新的界面 viewDidLoad
+    // viewWillDisappear
+    // viewDidDisappear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 再返回到这个页面
+    // 之前的界面 viewWillDisappear
+    // viewWillAppear
+    // 之前的界面 viewDidDisappear
+    // viewDidAppear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00>
+    
+    // 手势滑动但又放弃
+    // viewWillAppear
+    // viewWillDisappear --> 这个跟直接跳转界面流程一样
+    // viewDidDisappear
+    // didMoveToParentViewController parent = <UINavigationController: 0x101812a00
+    
+
+    [super viewDidDisappear:animated];
+    NSLog(@"ViewContoller viewDidDisappear");
+}
+
+-(void) willMoveToParentViewController:(UIViewController *)parent
+{
+    NSLog(@"ViewContoller willMoveToParentViewController parent = %@", parent);
+}
+
+-(void) didMoveToParentViewController:(UIViewController *)parent
+{
+    NSLog(@"ViewContoller didMoveToParentViewController parent = %@", parent);
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"ViewContoller prepareForSegue segue = %@ sender = %@", segue, sender);
+}
+
+#pragma mark - Table view delegate
 //-----------------------------------------------------------------------------------------------
 // UITableViewDelegate 协议
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     /*
@@ -189,10 +261,98 @@
         case 5:
         {
             // ------------------------------------------------------------------------------------------------
+            __weak typeof(self) weakSelf = self ;
+            
+            // __weak  声明了一个可以自动nil化的弱引用 只能在ARC模式下使用,也只能修饰对象（NSString,不能修饰基本数据类型（int）;__weak不可以在block中被重新赋值
+            // __strong 默认的引用
+            // __block 可以在block中被重新赋值; 不管是ARC还是MRC模式下都可以使用，可以修饰对象，还可以修饰基本数据类型; __block对象在ARC下可能会导致循环引用,所以ARC下引入了__weak
+            
+            // strong，weak 用来修饰属性
+            // __weak, __strong 用来修饰变量
+            
+            //------------------------------------------------------------------------------------------------------------
+            // __weak
+            //
+            // 有些情况，block 会强引用和持有self，而self恰好也强引用和持有了block(self.myblock=^{})，就造成了传说中的循环引用
+            // weakSelf是为了block不持有self，避免循环引用，
+            // 而再声明一个strongSelf是因为一旦进入block执行，就不允许self在这个执行过程中释放。
+            // block执行完后这个strongSelf会自动释放，没有循环引用问题。
+            
+            
+            // ------------------------------------------------------------------------------------------------
             // 下面使用方式1 XIB的方式创建ViewController对象
             
-            // 这里的NibName是XIB的文件名字
+            // 创建ViewController类的时候 可以勾选 also create xib file
+            // 1. 这样会创建xib文件(view)
+            // 2. 并且xib文件的File's Owner custom class设置为新建的VIewController
+            
+            // 在xib文件中，
+            // File’s Owner就是控制器 可以设置Custom Class为自己创建的ViewControl类
+            // View就是视图 也就是 Viewcontroller中的self.view（这个需要关联）这个View也可以设置自己的Custom Class(继承View或者UITableViewCell)
+            
+            // View和File's Owner(ViewContorller) 关联
+            // 1. 从File’s Owner按住control往View身上拽
+            // 2. 弹出菜单Outlets中选择view
+            // 3. 这样，viewcontroller中的view就是我们可视化xib文件中的View了
+            
+            
             XIBViewController *testVC = [[XIBViewController alloc] initWithNibName:@"XIBViewController" bundle:nil];
+            // 这里的NibName是XIB的文件名字
+            // 通过代码来创建的ViewController对象 传递参数
+            // 传入参数 可以直接在这里给下一个控制器传入参数
+            // 返回值   控制器之间的逆向传值, 通过block方式或者协议
+            testVC.feedback = ^ BOOL (int paramters, NSString* hints) {
+                
+               
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf == nil) {
+                    // 弱引用不会影响对象的释放，但是当对象被释放时，所有指向它的弱引用都会自定被置为 nil，这样可以防止野指针
+                    
+                    NSLog(@"back to View Controller was deleted ");
+                    return false ;
+                }
+                
+                NSMutableArray* newDataSource = [NSMutableArray arrayWithCapacity:strongSelf->_dataSource.count];
+                
+                //------------------------------------------------------------------------------------------------------------
+                // __block
+                //
+                // 在一个 block里头如果使用了在 block之外的变数，会将这份变数 "先复制一份再使用"，
+                // 也就是，在没有特别宣告下，
+                // 对于目前的block 来说，所有的外部的变数都是只可读的，不可改的。
+                
+                // Block捕获的自动变量添加 __block 说明符，就可在Block内读和写该变量，也可以在原来的栈上读写该变量。
+                // __block 发挥作用的原理：将栈上用 __block 修饰的自动变量封装成一个结构体，让其在堆上创建，以方便从栈上或堆上访问和修改同一份数据。
+                
+                
+                __block NSUInteger refreshIdx = -1 ;  // 需要增加 __block
+                
+                // Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
+                // [_dataSource enumerateObjectsUsingBlock:
+                [strongSelf->_dataSource enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj containsString:@"控制器传参数"])
+                    {
+                        NSString* ns = [NSString stringWithFormat:@"(控制器传参数)控制器返回值:%i,%@", paramters,hints];
+                        [newDataSource addObject:ns];
+                        refreshIdx = idx ;
+                    }
+                    else
+                    {
+                        [newDataSource addObject:obj];
+                    }
+                    
+                }];
+                //   NSMutableArray 是 NSArray 的子类 所以不用转换
+                strongSelf->_dataSource = newDataSource ;
+                
+                
+                // TableView 刷新局部的cell  如果NSINdexPath不存在 会出现 _UIAssertValidUpdateIndexPath
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:refreshIdx inSection:0];
+                [strongSelf.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
+                
+                return true ;
+            };
+            testVC.paramtersFromLastViewController = 2021 ;
             [self.navigationController pushViewController:testVC animated:YES];
             
         } break;
@@ -221,6 +381,7 @@
     }
 }
 
+#pragma mark - Table view data source
 //-----------------------------------------------------------------------------------------------
 // UITableViewDataSource 只有两个方法 是 必须要的
 // Only two methods of this protocol are required, and they are shown in the following example code.
@@ -230,7 +391,7 @@
 {
     [indexPath dumpInfo];
     // dequeueReusableCellWithIdentifier:forIndexPath:
-    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"]; // TableViewCell重用机制
     cell.textLabel.text = _dataSource[indexPath.row];
     return cell;
 }

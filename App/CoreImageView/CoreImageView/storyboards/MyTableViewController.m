@@ -6,6 +6,7 @@
 //
 
 #import "MyTableViewController.h"
+#import "ViewController.h"
 
 @interface MyTableViewController ()
 
@@ -15,35 +16,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"MyTableViewController viewDidLoad %p", self);
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // view controls stack 0 is <ViewController: 0x105e0ae10>
+    // view controls stack 1 is <MyTableViewController: 0x106f05430>
+    NSArray<UIViewController*> * ctrls = self.navigationController.viewControllers;
+    [ctrls enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"view controls stack %lu is %@", idx, obj);
+    }];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"myCell"];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return 2;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NSUInteger row = indexPath.row ;
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
     
-    return cell;
+    switch(row)
+    {
+        case 0:
+            cell.textLabel.text = @"navigation controller pop to LAST view";
+            cell.textLabel.textColor = [UIColor redColor];
+            break;
+        case 1:
+            cell.textLabel.text = @"navigation controller pop to TOP view";
+            cell.textLabel.textColor = [UIColor redColor];
+            break;
+    }
+            
+   return cell;
+
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -79,30 +95,65 @@
 }
 */
 
-/*
+
 #pragma mark - Table view delegate
 
+// 在基于 xib-based 的应用
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
-    // Pass the selected object to the new view controller.
+    NSUInteger row = indexPath.row ;
+    switch(row)
+    {
+        case 0:
+        {
+            ViewController* vc= self.navigationController.viewControllers[ self.navigationController.viewControllers.count - 1];
+            // 可以在这里设置返回参数 
+            [self.navigationController popToViewController:vc animated:NO];
+            
+            // 或者直接
+            // [self.navigationController popViewControllerAnimated:YES];
+        } break;
+        case 1:
+        {
+            // 从任何页面 立刻返回 根页面
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        } break;
+    }
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
 }
-*/
 
-/*
+
+
 #pragma mark - Navigation
 
+ // 在基于 storyboard的应用
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+   
+    NSLog(@"MyTableViewController viewWillDisappear %p", self);
+ 
+    // 到这里 stack已经没有了 当前这个页面
+    NSArray<UIViewController*> * ctrls = self.navigationController.viewControllers;
+    [ctrls enumerateObjectsUsingBlock:^(UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSLog(@"view controls stack %lu is %@", idx, obj);
+    }];
+    
+    [super viewWillDisappear:animated];
+}
+
+-(void) viewDidDisappear:(BOOL)animated
+{
+    NSLog(@"MyTableViewController viewDidDisappear %p", self);
+    [super viewDidDisappear:animated];
+}
 
 @end
