@@ -107,8 +107,8 @@
         @"采用GPU方式实时绘制",
         @"转场效果",
         @"人脸识别",
-        @"切换storyboard方式创建的ViewControler",
-        @"切换xib方式创建的ViewControler(控制器传参数)",
+        @"切换storyboard方式创建的ViewControler(VC)",
+        @"切换xib方式创建的VC(控制器传参数/返回值)",
         @"切换xib方式创建的TableViewControler"
     ];
     
@@ -207,7 +207,43 @@
             
             XIBViewController *testVC = [[XIBViewController alloc] initWithNibName:@"XIBViewController" bundle:nil];
             // 这里的NibName是XIB的文件名字
-            // 通过代码来创建的ViewController对象，可以直接在这里给下一个控制器传入参数
+            // 通过代码来创建的ViewController对象 传递参数
+            // 传入参数 可以直接在这里给下一个控制器传入参数
+            // 返回值   控制器之间的逆向传值, 通过block方式或者协议
+            testVC.feedback = ^ BOOL (int paramters, NSString* hints) {
+                
+                NSMutableArray* newDataSource = [NSMutableArray arrayWithCapacity:self->_dataSource.count];
+                
+                // Block捕获的自动变量添加 __block 说明符，就可在Block内读和写该变量，也可以在原来的栈上读写该变量。
+                // __block 发挥作用的原理：将栈上用 __block 修饰的自动变量封装成一个结构体，让其在堆上创建，以方便从栈上或堆上访问和修改同一份数据。
+                
+                __block NSUInteger refreshIdx = -1 ;  // 需要增加 __block
+                
+                // Block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior
+                // [_dataSource enumerateObjectsUsingBlock:
+                [self->_dataSource enumerateObjectsUsingBlock:^(NSString*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj containsString:@"控制器传参数"])
+                    {
+                        NSString* ns = [NSString stringWithFormat:@"(控制器传参数)控制器返回值:%i,%@", paramters,hints];
+                        [newDataSource addObject:ns];
+                        refreshIdx = idx ;
+                    }
+                    else
+                    {
+                        [newDataSource addObject:obj];
+                    }
+                    
+                }];
+                //   NSMutableArray 是 NSArray 的子类 所以不用转换
+                self->_dataSource = newDataSource ;
+                
+                
+                // TableView 刷新局部的cell  如果NSINdexPath不存在 会出现 _UIAssertValidUpdateIndexPath
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:refreshIdx inSection:0];
+                [self.tableview reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationFade];
+                
+                return true ;
+            };
             testVC.paramtersFromLastViewController = 2021 ;
             [self.navigationController pushViewController:testVC animated:YES];
             
@@ -246,7 +282,7 @@
 {
     [indexPath dumpInfo];
     // dequeueReusableCellWithIdentifier:forIndexPath:
-    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"]; // TableViewCell重用机制
     cell.textLabel.text = _dataSource[indexPath.row];
     return cell;
 }

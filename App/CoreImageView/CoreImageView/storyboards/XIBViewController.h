@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
     int paramtersFromLastViewController;
 }
 
+@property BOOL (^feedback) (int paramters, NSString* hints) ;
+
 -(int) paramtersFromLastViewController;
 -(void) setParamtersFromLastViewController:(int)paramId;
 
