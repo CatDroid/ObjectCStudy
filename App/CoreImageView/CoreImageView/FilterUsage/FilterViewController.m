@@ -10,6 +10,7 @@
 @interface FilterViewController ()
 {
     UIImageView* effectedImageView ;
+    NSInteger filer1Index ;
     UIButton* filterButton1;
     UIButton* filterButton2;
 }
@@ -31,8 +32,9 @@
 
 -(void) setupUI
 {
-    //UIImage* uiImage = [UIImage imageWithContentsOfFile:@"tansongyun.jpg"]; // nil
-    UIImage* uiImage = [UIImage imageNamed:@"tansongyun.jpg"]; // 搜索 the asset catalog,
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"tansongyun.jpg" ofType:nil];
+    UIImage* uiImage = [UIImage imageWithContentsOfFile:path]; // 这个path是个绝对路径 指向app容器中
+    //UIImage* uiImage = [UIImage imageNamed:@"tansongyun.jpg"]; // 搜索 the asset catalog,
     
     CGRect size = CGRectMake(0, 0, 200, 300);
     CGPoint point = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height*0.25); // UI控件原点是左上角
@@ -78,11 +80,62 @@
 
 #pragma mark - Filer
 
+- (UIImage*) addEffectName:(NSString*) filterName ToImage:(UIImage*) image
+{
+    // UIImage类的Core Graphics版本是CGImage（CGImageRef）
+    // 这两个类之间很容易进行转换，因为一个UIImage类有一个CGImage的属性
+    
+    
+    CIImage* ciImageIn = [image CIImage]; // UIImage直接有方法转成CIImage  // 底层的Core Image数据
+    //CIImage* ciImageIn = [[CIImage alloc] initWithImage:image];
+    
+    CIFilter* filter = [CIFilter filterWithName:filterName];
+    [filter setDefaults];
+    [filter setValue:ciImageIn forKey:kCIInputImageKey]; // input的image是 CIImage, 需要从UIImage转换到CIImage
+    CIImage* ciImage = [filter valueForKey:kCIOutputImageKey];
+    
+    // 需要真正获取输出 就必须通过CIContext
+    
+    CIContext* ciContext = [CIContext contextWithOptions:nil]; // GPU Context
+    
+    // CGImageRef是个结构体
+    // C类对象的内存管理,不是由ARC管理的,所以需要考虑手动管理内存
+    // CGImageRef 保存了 CIImage对象的强引用
+    CGImageRef cgImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent]; // 可以对图片进行裁剪
+    
+    UIImage* newImage = [UIImage imageWithCGImage:cgImage];
+    
+    CGImageRelease(cgImage);
+    
+    return newImage;
+}
+
 - (IBAction) filter1Button:(UIButton*)sender forEvent:(UIEvent*)event
 {
     NSLog(@"use filter 1");
     
+    NSArray<NSString*> * filterNameArray = @[
+        @"CIPhotoEffectFade",
+        @"CIPhotoEffectInstant",
+        @"CIPhotoEffectMono",
+        @"CIPhotoEffectNoir",
+        @"CIPhotoEffectProcess",
+        @"CIPhotoEffectTonal",
+        @"CIPhotoEffectTransfer"];
+
+    UIImage* originImage = [UIImage imageNamed:@"tansongyun.jpg"];
     
+    UIImage* lastImage = originImage ;
+    //for (int i = 0 ; i < 4 ; i++ ) {
+    //    lastImage  = [self addEffectName:filterNameArray[i] ToImage:lastImage];
+    //}
+  
+    lastImage  = [self addEffectName:filterNameArray[filer1Index] ToImage:lastImage];
+    
+    effectedImageView.image = lastImage ;
+    
+    filer1Index += 1;
+    filer1Index = filer1Index % filterNameArray.count;
 }
 
 - (IBAction) filter2Button:(UIButton*)sender forEvent:(UIEvent*)event
