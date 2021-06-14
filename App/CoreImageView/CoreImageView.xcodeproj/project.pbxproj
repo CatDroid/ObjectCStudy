@@ -14,6 +14,7 @@
 		B034206B2675110E00D34E53 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03420692675110E00D34E53 /* MyTableViewController.m */; };
 		B034206C2675110E00D34E53 /* MyTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034206A2675110E00D34E53 /* MyTableViewController.xib */; };
 		B034207026759A0400D34E53 /* ArgumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034206F26759A0400D34E53 /* ArgumentsViewController.m */; };
+		B03420742676FF4B00D34E53 /* tansongyun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B03420732676FF4B00D34E53 /* tansongyun.jpg */; };
 		B06A7819266DA1D100AD1B30 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06A7818266DA1D100AD1B30 /* FilterViewController.m */; };
 		B0769CA9266CDAA900C3FB00 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CA8266CDAA900C3FB00 /* AppDelegate.m */; };
 		B0769CAC266CDAA900C3FB00 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0769CAB266CDAA900C3FB00 /* SceneDelegate.m */; };
@@ -36,6 +37,7 @@
 		B034206A2675110E00D34E53 /* MyTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTableViewController.xib; sourceTree = "<group>"; };
 		B034206E26759A0400D34E53 /* ArgumentsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArgumentsViewController.h; sourceTree = "<group>"; };
 		B034206F26759A0400D34E53 /* ArgumentsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArgumentsViewController.m; sourceTree = "<group>"; };
+		B03420732676FF4B00D34E53 /* tansongyun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tansongyun.jpg; sourceTree = "<group>"; };
 		B06A7817266DA1D100AD1B30 /* FilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		B06A7818266DA1D100AD1B30 /* FilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B0769CA4266CDAA900C3FB00 /* CoreImageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreImageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,14 @@
 			path = storyboards;
 			sourceTree = "<group>";
 		};
+		B03420722676FF0600D34E53 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				B03420732676FF4B00D34E53 /* tansongyun.jpg */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		B06A7816266D9C0F00AD1B30 /* FilterUsage */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 		B0769CA6266CDAA900C3FB00 /* CoreImageView */ = {
 			isa = PBXGroup;
 			children = (
+				B03420722676FF0600D34E53 /* images */,
 				B034205A2674F30600D34E53 /* storyboards */,
 				B06A7816266D9C0F00AD1B30 /* FilterUsage */,
 				B0769CA7266CDAA900C3FB00 /* AppDelegate.h */,
@@ -185,6 +196,7 @@
 				B03420662675030800D34E53 /* XIBViewController.xib in Resources */,
 				B034206C2675110E00D34E53 /* MyTableViewController.xib in Resources */,
 				B0769CB7266CDAAA00C3FB00 /* LaunchScreen.storyboard in Resources */,
+				B03420742676FF4B00D34E53 /* tansongyun.jpg in Resources */,
 				B0769CB4266CDAAA00C3FB00 /* Assets.xcassets in Resources */,
 				B034205C2674F34D00D34E53 /* MyFirstStoryboard.storyboard in Resources */,
 				B0769CB2266CDAAA00C3FB00 /* Main.storyboard in Resources */,
