@@ -57,7 +57,7 @@
     
     filterButton1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
     filterButton1.center = CGPointMake(50, self.view.frame.size.height * 6 / 8);
-    [filterButton1 setTitle:@"滤镜1" forState:UIControlStateNormal]; // 未按下
+    [filterButton1 setTitle:@"系统滤镜" forState:UIControlStateNormal]; // 未按下
     [filterButton1 setTitle:@"按下滤镜1" forState:UIControlStateHighlighted]; // 按下
     [filterButton1 setBackgroundColor:[UIColor orangeColor]];
     [filterButton1 setAlpha:0.6];
@@ -68,7 +68,7 @@
     
     filterButton2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
     filterButton2.center = CGPointMake(50, self.view.frame.size.height * 7 / 8);
-    [filterButton2 setTitle:@"滤镜2" forState:UIControlStateNormal];
+    [filterButton2 setTitle:@"图像增强" forState:UIControlStateNormal];
     [filterButton2 setTitle:@"按下滤镜2" forState:UIControlStateHighlighted];
     [filterButton2 setBackgroundColor:[UIColor orangeColor]];
     [filterButton2 setAlpha:0.6];
@@ -85,27 +85,48 @@
     // UIImage类的Core Graphics版本是CGImage（CGImageRef）
     // 这两个类之间很容易进行转换，因为一个UIImage类有一个CGImage的属性
     
-    
-    CIImage* ciImageIn = [image CIImage]; // UIImage直接有方法转成CIImage  // 底层的Core Image数据
-    //CIImage* ciImageIn = [[CIImage alloc] initWithImage:image];
+    // 只有在UIImage是由CIImage提供时（比如它是由imageWithCIImage:生成的, UIImage的CIImage才不会是空值。
+    //CIImage* ciImageIn = [image CIImage];
+    CIImage* ciImageIn = [[CIImage alloc] initWithImage:image];
     
     CIFilter* filter = [CIFilter filterWithName:filterName];
     [filter setDefaults];
     [filter setValue:ciImageIn forKey:kCIInputImageKey]; // input的image是 CIImage, 需要从UIImage转换到CIImage
     CIImage* ciImage = [filter valueForKey:kCIOutputImageKey];
     
-    // 需要真正获取输出 就必须通过CIContext
+    UIImage* newImage;
     
-    CIContext* ciContext = [CIContext contextWithOptions:nil]; // GPU Context
-    
-    // CGImageRef是个结构体
-    // C类对象的内存管理,不是由ARC管理的,所以需要考虑手动管理内存
-    // CGImageRef 保存了 CIImage对象的强引用
-    CGImageRef cgImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent]; // 可以对图片进行裁剪
-    
-    UIImage* newImage = [UIImage imageWithCGImage:cgImage];
-    
-    CGImageRelease(cgImage);
+    if (false)
+    {
+        // 需要真正获取输出 就必须通过CIContext
+        CIContext* ciContext = [CIContext contextWithOptions:nil]; // GPU Context
+        
+        // CGImageRef是个结构体
+        // C类对象的内存管理,不是由ARC管理的,所以需要考虑手动管理内存
+        // CGImageRef 保存了 CIImage对象的强引用
+        CGImageRef cgImage = [ciContext createCGImage:ciImage fromRect:ciImage.extent]; // 可以对图片进行裁剪
+        newImage = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        
+    }
+    else
+    {
+        // 这里不用CIContext也可以拿到UIImage和保存png图片
+        newImage = [UIImage imageWithCIImage:ciImage]; // 这样设置给imageView.image也可以
+        NSData* data = UIImagePNGRepresentation(newImage);
+        NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString* path = [paths.firstObject stringByAppendingPathComponent:@"imageWithCIImage.png"];
+        BOOL success = [data writeToFile:path atomically:YES];
+        if (success) {
+            NSLog(@"imageWithCIImage.png done");
+        } else {
+            NSLog(@"imageWithCIImage.png fail");
+        }
+        
+        NSLog(@"UIImage中的CIImage属性(只有通过imageWithCIImage创建才会有) %@ ", newImage.CIImage); // 跟ciImage是同一个对象 强引用
+        NSLog(@"并且UIImage里就是引用imageWithCIImage传入的参数(强引用) %@ ", ciImage);
+    }
+
     
     return newImage;
 }
