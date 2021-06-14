@@ -196,7 +196,14 @@ void releaseCustomAllocator(CFAllocatorRef allocator)
     // CFStringRef ------> NSString
     //
     //
-    NSString *testNS = (__bridge NSString *)bCFString;
+    NSLog(@"CFString 引用计数 %lu", CFGetRetainCount(bCFString)); // 1
+    NSString *testNS = (__bridge NSString *)bCFString; // __bridge  toll-free bridged  Core->Cocoa 引用计数会自动加1
+    
+    // NSString is toll-free bridged with its Core Foundation counterpart, CFStringRef
+    
+    
+    // 利用KVC获取引用计数
+    NSLog(@"CFString/NSString --stage A-- 引用计数为 %@", [testNS valueForKey:@"retainCount"]); // CFString/NSString 引用计数为 2
     // CFRetain(CFTypeRef cf)
     
     // CFRelease和CGImageRelease的区别在于
@@ -204,18 +211,23 @@ void releaseCustomAllocator(CFAllocatorRef allocator)
     // CGImageRelease可以接受NULL参数
     
     CFRelease(bCFString); // 因为上面有NSString 所以到这里都不会释放 CFStringCreateWithCString 但如果没有了NSString 就会在这里返回前释放
-    NSLog(@"调用 CFRelease 之后, __bridge的NSString %@ class:%@", testNS, [testNS class]); // __NSCFConstantString
-    
+    NSLog(@"调用 CFRelease 之后, __bridge的NSString %@ 引用计数 %@ class:%@", testNS, [testNS valueForKey:@"retainCount"], [testNS class]); // __NSCFConstantString
+    // 到这里 testNS 引用计数减少到1
+ 
     //------------------------------------------------------------------------------------------------------------
     // CFStringRef ------> char*
     //
     //
-    const char *testC = [testNS UTF8String]; // !!! 这个返回的是NSString内部的 所以指针不用释放 但是要用到其他地方就要copy
-    char *testCNew = (char *)malloc(strlen(testC) + 1); //  [testNS UTF8String]; 会导致 释放时间更加晚 在调用函数再返回之后才释放
-    memcpy(testCNew, testC, strlen(testC) + 1);
-    NSLog(@"CFStringRef ------> char* :%s",testCNew);
-    free(testCNew);
-    
+    // - (BOOL)getCString:(char *)buffer maxLength:(NSUInteger)maxBufferCount encoding:(NSStringEncoding)encoding;
+    {
+        const char *testC = [testNS UTF8String]; // !!! 这个返回的是NSString内部的 所以指针不用释放 但是要用到其他地方就要copy
+        char *testCNew = (char *)malloc(strlen(testC) + 1); //  [testNS UTF8String]; 会导致 引用计数 加1了
+        memcpy(testCNew, testC, strlen(testC) + 1);
+        NSLog(@"CFStringRef ------> char* :%s",testCNew);
+        free(testCNew);
+    }
+   
+    NSLog(@"CFString/NSString --stage B-- 引用计数为 %@", [testNS valueForKey:@"retainCount"]); // 2 
 
     //------------------------------------------------------------------------------------------------------------
     CFStringRef justCFString = CFStringCreateWithCString(allocator, "hello world", kCFStringEncodingUTF8);
