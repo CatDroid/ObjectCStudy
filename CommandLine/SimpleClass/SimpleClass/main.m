@@ -86,6 +86,8 @@ int main(int argc, const char * argv[]) {
         extern void forth();
         forth();
         
+        extern void fifth();
+        fifth();
     }
     return 0;
 }

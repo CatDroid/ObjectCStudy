@@ -15,6 +15,7 @@
 		B0DB91C42640E79300EFF18D /* CRobotSoldier.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91C22640E79300EFF18D /* CRobotSoldier.m */; };
 		B0DB91C82640F3D200EFF18D /* CRobotSoldierSelfDestruct.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91C72640F3D200EFF18D /* CRobotSoldierSelfDestruct.m */; };
 		B0DB91CB2640F4A000EFF18D /* secondary.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB91CA2640F4A000EFF18D /* secondary.m */; };
+		B0EABC922688A76400F6C5E0 /* fifth.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EABC912688A76400F6C5E0 /* fifth.m */; };
 		B0FDDA2226515D7200E2BD73 /* third.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDDA2126515D7200E2BD73 /* third.m */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		B0DB91C62640F3D200EFF18D /* CRobotSoldierSelfDestruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRobotSoldierSelfDestruct.h; sourceTree = "<group>"; };
 		B0DB91C72640F3D200EFF18D /* CRobotSoldierSelfDestruct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRobotSoldierSelfDestruct.m; sourceTree = "<group>"; };
 		B0DB91CA2640F4A000EFF18D /* secondary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = secondary.m; sourceTree = "<group>"; };
+		B0EABC912688A76400F6C5E0 /* fifth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = fifth.m; sourceTree = "<group>"; };
 		B0FDDA10265113B100E2BD73 /* en.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = en.strings; sourceTree = "<group>"; };
 		B0FDDA11265113FB00E2BD73 /* zh.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = zh.strings; sourceTree = "<group>"; };
 		B0FDDA2126515D7200E2BD73 /* third.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = third.m; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				B0769CC2266CDE8D00C3FB00 /* CategoryClass.h */,
 				B0769CC3266CDE8D00C3FB00 /* CategoryClass.m */,
 				B0769CC6266CFB1C00C3FB00 /* forth.m */,
+				B0EABC912688A76400F6C5E0 /* fifth.m */,
 			);
 			path = SimpleClass;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				B0DB91C82640F3D200EFF18D /* CRobotSoldierSelfDestruct.m in Sources */,
 				B0DB91CB2640F4A000EFF18D /* secondary.m in Sources */,
 				B0FDDA2226515D7200E2BD73 /* third.m in Sources */,
+				B0EABC922688A76400F6C5E0 /* fifth.m in Sources */,
 				B0DB91C42640E79300EFF18D /* CRobotSoldier.m in Sources */,
 				B0B606CF2658FB3000CEBA14 /* typeEncode.m in Sources */,
 				B0769CC4266CDE8D00C3FB00 /* CategoryClass.m in Sources */,
